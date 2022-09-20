@@ -9,13 +9,14 @@ import {Router} from "react-router-dom";
 import history from "./history";
 import {ThemeProvider} from "@mui/material";
 import theme from "./theme";
+import musicReducer from "./store/reducers/musicReducer";
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 const rootReducer = combineReducers({
-
+    music: musicReducer,
 });
 
 const store = createStore(
