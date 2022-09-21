@@ -16,7 +16,7 @@ router.get('/', async( req, res) => {
         const albums  = await Album.find({artist: req.query.artist}, "_id title");
         const tracks = await Track.find({album: {$in: albums}}).populate('album', 'title');
 
-        res.send(tracks);
+       return  res.send(tracks);
     }
 
     try {

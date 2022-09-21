@@ -2,7 +2,7 @@ import React from 'react';
 import {Avatar, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {Link} from "react-router-dom";
-import InfoIcon from "@mui/icons-material/Info";
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 const AlbumItem = ({image, title, release, tracks, id}) => {
     return (
@@ -25,7 +25,7 @@ const AlbumItem = ({image, title, release, tracks, id}) => {
             <Typography variant={'h3'} sx={{ textTransform: 'capitalize', marginBottom: '15px'}}>
                 {title}
             </Typography>
-            <Typography component={'p'}  sx={{textTransform: 'capitalize'}}>
+            <Typography component={'p'}  sx={{margin: '0 0 10px', textAlign: 'center'}}>
                 Year of release: <i>{release}</i>
             </Typography>
             <Typography component={'p'} sx={{ textTransform: 'capitalize'}}>
@@ -37,7 +37,7 @@ const AlbumItem = ({image, title, release, tracks, id}) => {
                 sx={{ color: 'rgba(148,148,148,0.54)' }}
                 aria-label={`info about ${title}`}
             >
-                <InfoIcon />
+                <ArrowDropDownCircleIcon />
             </IconButton>
 
         </div>

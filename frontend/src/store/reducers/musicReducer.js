@@ -2,7 +2,7 @@ import {
     FETCH_ALBUM_FAILURE,
     FETCH_ALBUM_REQUEST, FETCH_ALBUM_SUCCESS,
     FETCH_ALBUMS_FAILURE,
-    FETCH_ALBUMS_REQUEST, FETCH_ALBUMS_SUCCESS,
+    FETCH_ALBUMS_REQUEST, FETCH_ALBUMS_SUCCESS, FETCH_ARTIST_FAILURE, FETCH_ARTIST_REQUEST, FETCH_ARTIST_SUCCESS,
     FETCH_ARTISTS_FAILURE,
     FETCH_ARTISTS_REQUEST,
     FETCH_ARTISTS_SUCCESS, FETCH_TRACKS_FAILURE, FETCH_TRACKS_REQUEST, FETCH_TRACKS_SUCCESS
@@ -10,6 +10,7 @@ import {
 
 const initialState = {
     artists: null,
+    artist: null,
     artistErrors: null,
     artistLoading: false,
 
@@ -31,6 +32,13 @@ const musicReducer = (state = initialState, actions ) => {
         case FETCH_ARTISTS_SUCCESS:
             return { ...state, artistLoading: false, artists: actions.payload };
         case FETCH_ARTISTS_FAILURE:
+            return { ...state, artistLoading: false, artistErrors: actions.payload };
+
+        case FETCH_ARTIST_REQUEST:
+            return { ...state, artistLoading: true, artistErrors: null };
+        case FETCH_ARTIST_SUCCESS:
+            return { ...state, artistLoading: false, artist: actions.payload };
+        case FETCH_ARTIST_FAILURE:
             return { ...state, artistLoading: false, artistErrors: actions.payload };
 
         case FETCH_ALBUMS_REQUEST:

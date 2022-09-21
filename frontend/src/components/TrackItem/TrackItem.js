@@ -15,7 +15,7 @@ const TrackItem = ({number, title, duration}) => {
             borderRadius: '20px'
         }}>
 
-            <Typography variant={'h5'} sx={{ textTransform: 'capitalize', marginBottom: '15px'}}>
+            <Typography variant={'h5'} sx={{ textTransform: 'capitalize'}}>
                 Track #{number}
             </Typography>
             <Typography variant={'h4'}  sx={{textTransform: 'capitalize'}}>

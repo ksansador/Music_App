@@ -17,15 +17,15 @@ const Artists = () => {
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
             {loading
                 ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
-                : artists && artists.map(artist => (
-                    <ArtistItem
-                        key={artist._id}
-                        id={artist._id}
-                        title={artist.title}
-                        image={artist.image}
-                    />
-                ) )
-            }
+                : artists &&
+                    artists.map(artist => (
+                        <ArtistItem
+                            key={artist._id}
+                            id={artist._id}
+                            title={artist.title}
+                            image={artist.image}
+                        />
+            ))}
         </div>
     );
 };

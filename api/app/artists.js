@@ -28,6 +28,20 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+   try {
+       const artist = await Artist.findById(req.params.id);
+
+       if(!artist) {
+          return  res.status(404).send({message: 'Artist not found!'});
+       }
+
+       res.send(artist);
+   } catch (e) {
+       res.sendStatus(500);
+   }
+});
+
 router.post('/', upload.single('image'), async (req,res) => {
     const { title, description } = req.body;
 

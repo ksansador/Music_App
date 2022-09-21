@@ -2,24 +2,32 @@ import axiosApi from "../../axiosApi";
 import AxiosApi from "../../axiosApi";
 
 export const FETCH_ARTISTS_REQUEST = 'FETCH_ARTISTS_REQUEST';
-export const FETCH_ARTISTS_SUCCESS= 'FETCH_ARTISTS_SUCCESS';
+export const FETCH_ARTISTS_SUCCESS = 'FETCH_ARTISTS_SUCCESS';
 export const FETCH_ARTISTS_FAILURE = 'FETCH_ARTISTS_FAILURE';
 
+export const FETCH_ARTIST_REQUEST = 'FETCH_ARTIST_REQUEST';
+export const FETCH_ARTIST_SUCCESS = 'FETCH_ARTIST_SUCCESS';
+export const FETCH_ARTIST_FAILURE = 'FETCH_ARTIST_FAILURE';
+
 export const FETCH_ALBUMS_REQUEST = 'FETCH_ALBUMS_REQUEST';
-export const FETCH_ALBUMS_SUCCESS= 'FETCH_ALBUMS_SUCCESS';
+export const FETCH_ALBUMS_SUCCESS = 'FETCH_ALBUMS_SUCCESS';
 export const FETCH_ALBUMS_FAILURE = 'FETCH_ALBUMS_FAILURE';
 
 export const FETCH_ALBUM_REQUEST = 'FETCH_ALBUM_REQUEST';
-export const FETCH_ALBUM_SUCCESS= 'FETCH_ALBUM_SUCCESS';
+export const FETCH_ALBUM_SUCCESS = 'FETCH_ALBUM_SUCCESS';
 export const FETCH_ALBUM_FAILURE = 'FETCH_ALBUM_FAILURE';
 
 export const FETCH_TRACKS_REQUEST = 'FETCH_TRACKS_REQUEST';
-export const FETCH_TRACKS_SUCCESS= 'FETCH_TRACKS_SUCCESS';
+export const FETCH_TRACKS_SUCCESS = 'FETCH_TRACKS_SUCCESS';
 export const FETCH_TRACKS_FAILURE = 'FETCH_TRACKS_FAILURE';
 
 const fetchArtistsRequest = () => ({type: FETCH_ARTISTS_REQUEST});
 const fetchArtistsSuccess = artists => ({type: FETCH_ARTISTS_SUCCESS, payload: artists});
 const fetchArtistsFailure = errors => ({type: FETCH_ARTISTS_FAILURE, payload: errors});
+
+const fetchArtistRequest = () => ({type: FETCH_ARTIST_REQUEST});
+const fetchArtistSuccess = artist => ({type: FETCH_ARTIST_SUCCESS, payload: artist});
+const fetchArtistFailure = errors => ({type: FETCH_ARTIST_FAILURE, payload: errors});
 
 const fetchAlbumsRequest = () => ({type: FETCH_ALBUMS_REQUEST});
 const fetchAlbumsSuccess = albums => ({type: FETCH_ALBUMS_SUCCESS, payload: albums});
@@ -99,6 +107,23 @@ export const fetchAlbum = id => {
           }
       }catch (e) {
           dispatch(fetchAlbumFailure(e));
+      }
+  };
+};
+export const fetchArtist = id => {
+  return async dispatch => {
+      try {
+          dispatch(fetchArtistRequest());
+
+          const response = await AxiosApi('/artists/' +id);
+
+          if(response.data) {
+              dispatch(fetchArtistSuccess(response.data));
+          } else {
+              dispatch(fetchArtistSuccess({}));
+          }
+      }catch (e) {
+          dispatch(fetchArtistFailure(e));
       }
   };
 };

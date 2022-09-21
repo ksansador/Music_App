@@ -1,7 +1,6 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-
 import {Avatar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
@@ -31,6 +30,7 @@ const  ArtistItem = ({image, title, id}) => {
                 sx={{ color: 'rgba(148,148,148,0.54)' }}
                 aria-label={`info about ${title}`}
             >
+
                 <InfoIcon />
             </IconButton>
 

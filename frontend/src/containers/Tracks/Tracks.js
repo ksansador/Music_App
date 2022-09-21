@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchAlbum, fetchTracks} from "../../store/actions/musicActions";
 import TrackItem from "../../components/TrackItem/TrackItem";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Title from "../../components/UI/Title/Title";
 
 const Tracks = ({match}) => {
      const dispatch = useDispatch();
@@ -17,29 +17,31 @@ const Tracks = ({match}) => {
      }, [dispatch, match.params.id]);
 
     return (
-        <div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
+        <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }}>
             {loading ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
-                :
-                tracks && (
+                : (
                     <>
-                        <Typography  style={{
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            textTransform: 'capitalize'
-                        }}
-                                      variant={'h4'}>
-                            {album? album.artist.title : null} <ArrowForwardIosIcon style={{margin: '0 10px'}}/> {album? album.title : null}
-                        </Typography>
-                        {
-                            tracks.map(item => (
-                            <TrackItem
-                                key={item._id}
-                                title={item.title}
-                                duration={item.duration}
-                                number={item.number}
+                        { album && (
+                            <Title
+                                albumTitle={album.title}
+                                artistTitle={album.artist.title}
                             />
-                        ))
+                        )}
+                        { tracks &&
+                            tracks.map(item => (
+                                <TrackItem
+                                    key={item._id}
+                                    title={item.title}
+                                    duration={item.duration}
+                                    number={item.number}
+                                />
+                            ))
                         }
                     </>
                 )}

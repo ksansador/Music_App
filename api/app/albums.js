@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
             const result = await Promise.all(albums.map (async album => {
                 const tracks = await Track.find({album: album._id });
 
-                return {...album['_doc'], count: tracks.length}
+                return {...album['_doc'], count: tracks.length};
             }));
 
           return  res.send(result);
@@ -62,7 +62,7 @@ router.get('/:id', async (req, res) => {
             .populate('artist', 'title description image');
 
         if(!album) {
-            res.status(404).send({message: 'Album not found!'});
+            return res.status(404).send({message: 'Album not found!'});
         }
 
         res.send(album);
