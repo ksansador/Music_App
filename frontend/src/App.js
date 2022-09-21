@@ -10,7 +10,7 @@ function App() {
       <Switch>
         <Route path={'/'} exact component={Artists}/>
           <Route path={'/albums/:id'} component={Albums}/>
-          <Route path={'/tracks/:albumId'} component={Tracks}/>
+          <Route path={'/tracks/:id'} component={Tracks}/>
       </Switch>
     </Layout>
   );

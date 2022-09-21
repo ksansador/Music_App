@@ -27,7 +27,7 @@ const  ArtistItem = ({image, title, id}) => {
             </Typography>
 
             <IconButton
-                component={Link} to={'/artist/' + id}
+                component={Link} to={'/albums/' + id}
                 sx={{ color: 'rgba(148,148,148,0.54)' }}
                 aria-label={`info about ${title}`}
             >

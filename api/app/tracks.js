@@ -4,10 +4,14 @@ const Album = require("../models/Album");
 const router = express.Router();
 
 router.get('/', async( req, res) => {
-    if(req.query.album) {
-        const tracks = await Track.find({album: req.query.album});
 
-        res.send(tracks);
+    if(req.query.album) {
+        const tracks = await Track
+            .find({album: req.query.album})
+            .sort({number: 1})
+            .populate('album', 'title');
+
+       return res.send(tracks);
     } else if ( req.query.artist) {
         const albums  = await Album.find({artist: req.query.artist}, "_id title");
         const tracks = await Track.find({album: {$in: albums}}).populate('album', 'title');
@@ -27,13 +31,13 @@ router.get('/', async( req, res) => {
 });
 
 router.post('/', async (req, res) => {
-   const { title, album, duration } = req.body;
+   const { title, album, duration, number } = req.body;
 
-   if ( !title || !album || !duration ) {
+   if ( !title || !album || !duration || !number) {
        return res.status(400).send({error: 'Data not valid'});
    }
 
-   const trackData = { title, album , duration };
+   const trackData = { title, album , duration, number };
 
    try {
     const track = new Track (trackData);

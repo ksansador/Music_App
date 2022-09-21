@@ -4,12 +4,12 @@ import IconButton from "@mui/material/IconButton";
 import {Link} from "react-router-dom";
 import InfoIcon from "@mui/icons-material/Info";
 
-const AlbumItem = ({image, title, release, tracks}) => {
+const AlbumItem = ({image, title, release, tracks, id}) => {
     return (
         <div  style={{
             display: 'flex',
             flexDirection: 'column',
-            maxWidth: '50%',
+            width: '30%',
             justifyContent: 'center',
             alignItems: 'center',
             margin: '20px',
@@ -33,7 +33,7 @@ const AlbumItem = ({image, title, release, tracks}) => {
             </Typography>
 
             <IconButton
-                component={Link} to={'/artist/' + id}
+                component={Link} to={'/tracks/' + id}
                 sx={{ color: 'rgba(148,148,148,0.54)' }}
                 aria-label={`info about ${title}`}
             >

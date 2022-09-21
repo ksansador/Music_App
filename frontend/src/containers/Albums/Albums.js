@@ -15,7 +15,7 @@ const Albums = ({match}) => {
 
 
     return (
-        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between'}}>
             {loading ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
                 :
                 albums && (
@@ -35,19 +35,7 @@ const Albums = ({match}) => {
                                 />
                         ))}
                     </>
-
-                )
-                    //
-
-                // albums.map(item => (
-                //     <AlbumItem
-                //         key={item._id}
-                //         title={item.title}
-                //         release={item.year}
-                //         tracks={item.count}
-                //     />))
-
-            }
+                )}
         </div>
     );
 };
