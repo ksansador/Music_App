@@ -2,8 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchArtists} from "../../store/actions/musicActions";
 import {Box} from "@mui/material";
-import Artist from "../../components/Artist/Artist";
-
+import ArtistItem from "../../components/ArtistItem/ArtistItem";
 const Artists = () => {
     const dispatch = useDispatch();
     const loading = useSelector( state => state.music.artistLoading);
@@ -19,8 +18,9 @@ const Artists = () => {
             {loading
                 ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
                 : artists && artists.map(artist => (
-                    <Artist
+                    <ArtistItem
                         key={artist._id}
+                        id={artist._id}
                         title={artist.title}
                         image={artist.image}
                     />

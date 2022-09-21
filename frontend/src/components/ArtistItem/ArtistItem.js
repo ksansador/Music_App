@@ -3,8 +3,9 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 
 import {Avatar, Typography} from "@mui/material";
+import {Link} from "react-router-dom";
 
-const  Artist = ({image, title}) => {
+const  ArtistItem = ({image, title, id}) => {
 
     return (
         <div  style={{
@@ -18,7 +19,6 @@ const  Artist = ({image, title}) => {
         }}>
             <Avatar
                 src={`${image}?w=248&fit=crop&auto=format`}
-                // srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
                 alt={title}
                 sx={{ width: 100, height: 100, marginRight: '40px' }}
             />
@@ -27,6 +27,7 @@ const  Artist = ({image, title}) => {
             </Typography>
 
             <IconButton
+                component={Link} to={'/artist/' + id}
                 sx={{ color: 'rgba(148,148,148,0.54)' }}
                 aria-label={`info about ${title}`}
             >
@@ -37,4 +38,4 @@ const  Artist = ({image, title}) => {
     );
 };
 
-export default Artist;
+export default ArtistItem;

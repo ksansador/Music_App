@@ -21,7 +21,7 @@ const AppToolbar = () => {
 
   return (
     <>
-     <AppBar position="fixed">
+     <AppBar position="fixed" sx={{backgroundColor: '#3a3939'}}>
        <Toolbar>
          <Grid container justifyContent={'space-between'} alignItems={'center'}>
            <Typography variant="h6">
