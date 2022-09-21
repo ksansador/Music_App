@@ -5,6 +5,7 @@ const {nanoid} = require('nanoid');
 
 const config = require('../config');
 const Album = require('../models/Album');
+const Track = require("../models/Track");
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -27,13 +28,17 @@ router.get('/', async (req, res) => {
 
             const albums = await Album
                 .find(filter)
-                .sort(sort);
+                .sort(sort)
+                .populate('artist', 'title');
 
-            const result = await Album
-                .find(filter)
-                .count({});
+            const result = await Promise.all(albums.map (async album => {
+                const tracks = await Track.find({album: album._id });
 
-            res.send({albums, result});
+                return {...album['_doc'], count: tracks.length}
+            }));
+
+          return  res.send(result);
+
         } catch (e) {
             res.sendStatus(500);
         }
