@@ -3,6 +3,7 @@ import {Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
+import NumbersIcon from '@mui/icons-material/Numbers';
 
 const TrackItem = ({number, title, duration}) => {
     return (
@@ -18,7 +19,7 @@ const TrackItem = ({number, title, duration}) => {
         }}>
 
             <Typography variant={'h5'} sx={{ textTransform: 'capitalize'}}>
-                Track #{number}
+                Track <NumbersIcon/>{number}
             </Typography>
             <Typography variant={'h4'}  sx={{textTransform: 'capitalize'}}>
                 {title}

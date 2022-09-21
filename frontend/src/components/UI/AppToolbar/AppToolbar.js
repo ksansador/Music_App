@@ -1,7 +1,8 @@
 import React from 'react';
-import {AppBar, Button, Grid, Toolbar, Typography} from "@mui/material";
+import {AppBar, Grid, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {makeStyles} from "tss-react/mui";
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 
 const useStyles = makeStyles()(theme => ({
   mainLink: {
@@ -24,7 +25,8 @@ const AppToolbar = () => {
      <AppBar position="fixed" sx={{backgroundColor: '#3a3939'}}>
        <Toolbar>
          <Grid container justifyContent={'space-between'} alignItems={'center'}>
-           <Typography variant="h6">
+           <Typography variant="h6" style={{display: 'flex', alignItems: 'center'}}>
+             <LibraryMusicIcon style={{marginRight: '10px'}}/>
              <Link to="/" className={classes.mainLink}>
                Music App
              </Link>
