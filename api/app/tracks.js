@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
    const { title, album, duration, number } = req.body;
 
    if ( !title || !album || !duration || !number) {
-       return res.status(400).send({error: 'Data not valid'});
+       return res.status(404).send({error: 'Data not valid'});
    }
 
    const trackData = { title, album , duration, number };

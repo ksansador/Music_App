@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const idValidator = require('mongoose-id-validator');
-const uniqueValidator = require('mongoose-unique-validator');
 
 const AlbumSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: true,
     },
     artist: {
         type: Schema.Types.ObjectId,
@@ -21,7 +19,6 @@ const AlbumSchema = new Schema({
     image: String,
 });
 
-AlbumSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.'});
 AlbumSchema.plugin(idValidator, { message : 'Bad ID value for {PATH}' });
 const Album = mongoose.model('Album', AlbumSchema);
 

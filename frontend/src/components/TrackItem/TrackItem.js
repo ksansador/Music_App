@@ -1,6 +1,8 @@
 import React from 'react';
 import {Typography} from "@mui/material";
-
+import IconButton from "@mui/material/IconButton";
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
 
 const TrackItem = ({number, title, duration}) => {
     return (
@@ -21,15 +23,22 @@ const TrackItem = ({number, title, duration}) => {
             <Typography variant={'h4'}  sx={{textTransform: 'capitalize'}}>
                 {title}
             </Typography>
-            <Typography component={'p'} sx={{ textTransform: 'capitalize'}}>
-                Duration: {duration}
-            </Typography>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <Typography component={'p'} sx={{ textTransform: 'capitalize', marginRight: '10px'}}>
+                    {duration}
+                </Typography>
+                <IconButton> <PlayCircleFilledWhiteIcon/> </IconButton>
+                <IconButton> <StopCircleIcon/> </IconButton>
+
+            </div>
+
 
             {/*<IconButton*/}
             {/*    component={Link} to={'/tracks/' + id}*/}
             {/*    sx={{ color: 'rgba(148,148,148,0.54)' }}*/}
             {/*    aria-label={`info about ${title}`}*/}
             {/*>*/}
+
             {/*    <InfoIcon />*/}
             {/*</IconButton>*/}
 
