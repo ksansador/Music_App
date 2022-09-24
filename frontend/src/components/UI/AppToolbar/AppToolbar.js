@@ -1,8 +1,9 @@
 import React from 'react';
-import {AppBar, Grid, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, Grid, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {makeStyles} from "tss-react/mui";
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles()(theme => ({
   mainLink: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles()(theme => ({
 
 const AppToolbar = () => {
   const { classes } = useStyles();
+  const user = useSelector(state => state.users.user);
 
   return (
     <>
@@ -31,9 +33,14 @@ const AppToolbar = () => {
                Music App
              </Link>
            </Typography>
-           {/*<Button component={Link} to={'/register'} color={"inherit"}>*/}
-           {/*  Sign up*/}
-           {/*</Button>*/}
+
+           {/*<Grid item>*/}
+           {/*  {user ? <UserMenu user={user}/> : <Anonymous/>}*/}
+           {/*</Grid>*/}
+
+           <Button component={Link} to={'/register'} color={"inherit"}>
+             Sign up
+           </Button>
          </Grid>
        </Toolbar>
      </AppBar>

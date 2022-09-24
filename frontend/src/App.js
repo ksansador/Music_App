@@ -3,6 +3,7 @@ import Layout from "./components/UI/Layout/Layout";
 import Artists from "./containers/Artists/Artists";
 import Albums from "./containers/Albums/Albums";
 import Tracks from "./containers/Tracks/Tracks";
+import Register from "./containers/Register/Register";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path={'/'} exact component={Artists}/>
           <Route path={'/albums/:id'} component={Albums}/>
           <Route path={'/tracks/:id'} component={Tracks}/>
+          <Route path={'/register'} component={Register}/>
       </Switch>
     </Layout>
   );
