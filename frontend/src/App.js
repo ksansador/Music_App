@@ -4,7 +4,7 @@ import Artists from "./containers/Artists/Artists";
 import Albums from "./containers/Albums/Albums";
 import Tracks from "./containers/Tracks/Tracks";
 import Register from "./containers/Register/Register";
-import {Login} from "@mui/icons-material";
+import Login from "./containers/Login/Login";
 
 function App() {
   return (

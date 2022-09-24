@@ -4,16 +4,10 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.post('/', async(req, res) => {
-   const {username, password} = req.body;
-
-   if(!username || !password) {
-     return res.status(400).send({error: 'Data not valid'});
-   }
-
-   const userData = {username, password};
-
 
     try {
+        const {username, password} = req.body;
+        const userData = {username, password};
         const user = new User(userData);
         user.generateToken();
 
@@ -30,19 +24,18 @@ router.post('/sessions', async(req, res) => {
  const user = await User.findOne({username});
 
  if(!user) {
-     return res.status(400).send({error: 'Username or password wrong'});
+     return res.status(401).send({message: 'Credentials are wrong!'});
  }
 
  const isMatch = await user.checkPassword(password);
 
  if(!isMatch) {
-      return  res.status(400).send({error: 'Password or username wrong'});
+     res.status(401).send({message: 'Credentials are wrong!'});
  }
 
  user.generateToken();
- await user.save();
-
- return res.send({message: 'Username and password id correct!', user});
+ await user.save({validateBeforeSave: false});
+ res.send({message: 'Username and password id correct!', user});
 });
 
 module.exports = router;

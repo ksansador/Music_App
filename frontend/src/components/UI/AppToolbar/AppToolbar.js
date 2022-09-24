@@ -32,12 +32,14 @@ const AppToolbar = () => {
        <ToastContainer />
        <Toolbar>
          <Grid container justifyContent={'space-between'} alignItems={'center'}>
+           <Grid item>
            <Typography variant="h6" style={{display: 'flex', alignItems: 'center'}}>
              <LibraryMusicIcon style={{marginRight: '10px'}}/>
              <Link to="/" className={classes.mainLink}>
                Music App
              </Link>
            </Typography>
+           </Grid>
 
            <Grid item>
              {user ? <UserMenu user={user}/> : <Anonymous/>}
