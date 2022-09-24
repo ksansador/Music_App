@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, Link as RouterLink} from "react-router-dom";
 import FormElement from "../../components/UI/Form/FormElement/FormElement";
@@ -6,7 +6,7 @@ import {Avatar, Container, Grid, Typography} from "@mui/material";
 import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWithProgress";
 import {LockOutlined} from "@mui/icons-material";
 import {makeStyles} from "tss-react/mui";
-import {registerUser} from "../../store/actions/usersActions";
+import {clearRegisterErrors, registerUser} from "../../store/actions/usersActions";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -37,6 +37,12 @@ const Register = () => {
         username: '',
         password: '',
     });
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearRegisterErrors());
+        }
+    }, [dispatch]);
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;

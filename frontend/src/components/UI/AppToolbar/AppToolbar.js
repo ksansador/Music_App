@@ -1,9 +1,13 @@
 import React from 'react';
-import {AppBar, Button, Grid, Toolbar, Typography} from "@mui/material";
+import {AppBar, Grid, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {makeStyles} from "tss-react/mui";
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from "react-toastify";
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import {useSelector} from "react-redux";
+import UserMenu from "./Menu/UserMenu";
+import Anonymous from "./Menu/Anonymous";
 
 const useStyles = makeStyles()(theme => ({
   mainLink: {
@@ -25,6 +29,7 @@ const AppToolbar = () => {
   return (
     <>
      <AppBar position="fixed" sx={{backgroundColor: '#3a3939'}}>
+       <ToastContainer />
        <Toolbar>
          <Grid container justifyContent={'space-between'} alignItems={'center'}>
            <Typography variant="h6" style={{display: 'flex', alignItems: 'center'}}>
@@ -34,13 +39,10 @@ const AppToolbar = () => {
              </Link>
            </Typography>
 
-           {/*<Grid item>*/}
-           {/*  {user ? <UserMenu user={user}/> : <Anonymous/>}*/}
-           {/*</Grid>*/}
+           <Grid item>
+             {user ? <UserMenu user={user}/> : <Anonymous/>}
+           </Grid>
 
-           <Button component={Link} to={'/register'} color={"inherit"}>
-             Sign up
-           </Button>
          </Grid>
        </Toolbar>
      </AppBar>
