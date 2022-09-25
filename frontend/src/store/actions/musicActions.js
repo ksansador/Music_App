@@ -163,9 +163,9 @@ export const addTrackToHistory = id => {
 
            await  dispatch(addTrackToHistoryRequest());
 
-            const response  = await axiosApi.post('/track_history', {track: id}, {headers});
-            await dispatch(addTrackToHistorySuccess());
-            console.log(response);
+           await axiosApi.post('/track_history', {track: id}, {headers});
+
+           await dispatch(addTrackToHistorySuccess());
         }  catch (e) {
             if(e.response && e.response.data) {
                 dispatch(addTrackToHistoryFailure(e.response.data));

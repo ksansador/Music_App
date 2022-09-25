@@ -44,7 +44,7 @@ const UserMenu = ({user}) => {
                 '&:hover': {
                     color: 'inherit'
                 }}}>
-                Track History
+                History
             </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>Profile</MenuItem>

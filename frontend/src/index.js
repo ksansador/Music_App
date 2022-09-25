@@ -11,6 +11,7 @@ import {ThemeProvider} from "@mui/material";
 import theme from "./theme";
 import musicReducer from "./store/reducers/musicReducer";
 import usersReducer from "./store/reducers/usersReducer";
+import trackHistoryReducer from "./store/reducers/trackHistoryReducer";
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -19,6 +20,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
     music: musicReducer,
     users: usersReducer,
+    trackHistory: trackHistoryReducer,
 });
 
 const store = createStore(

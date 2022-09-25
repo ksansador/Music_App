@@ -23,7 +23,6 @@ const Tracks = ({match}) => {
     }
      const onTrackClick = async (id) => {
          await dispatch(addTrackToHistory(id));
-         console.log(id);
      };
 
     return (

@@ -2,7 +2,7 @@ import React from 'react';
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {Typography} from "@mui/material";
 
-const Title = ({artistTitle, albumTitle}) => {
+const Title = ({artistTitle, albumTitle, children}) => {
 
     return (
         <Typography  style={{
@@ -18,6 +18,7 @@ const Title = ({artistTitle, albumTitle}) => {
             {artistTitle}
             <ArrowForwardIosIcon style={{margin: '0 10px'}}/>
             {albumTitle}
+            {children}
         </Typography>
     );
 };

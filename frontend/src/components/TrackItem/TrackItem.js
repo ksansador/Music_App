@@ -1,9 +1,9 @@
 import React from 'react';
 import {Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
+
 import NumbersIcon from '@mui/icons-material/Numbers';
+import YouTubeIcon from "@mui/icons-material/YouTube";
 
 const TrackItem = ({number, title, duration, onClick}) => {
     return (
@@ -28,7 +28,8 @@ const TrackItem = ({number, title, duration, onClick}) => {
                 <Typography component={'p'} sx={{ textTransform: 'capitalize', marginRight: '10px'}}>
                     {duration}
                 </Typography>
-                <IconButton onClick={onClick}> <PlayCircleFilledWhiteIcon/> </IconButton>
+                <IconButton onClick={onClick}> <YouTubeIcon fontSize={'large'}/> </IconButton>
+                {/*<IconButton sx={{marginRight: '20px'}}></IconButton>*/}
                 {/*<IconButton> <StopCircleIcon/> </IconButton>*/}
 
             </div>
