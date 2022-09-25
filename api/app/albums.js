@@ -6,7 +6,6 @@ const {nanoid} = require('nanoid');
 const config = require('../config');
 const Album = require('../models/Album');
 const Track = require("../models/Track");
-const auth = require("../middleware/auth");
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -20,7 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-router.get('/',auth, async (req, res) => {
+router.get('/', async (req, res) => {
     if(req.query.artist) {
         const filter = {artist: req.query.artist}
         const sort = { year: +1};

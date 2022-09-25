@@ -5,7 +5,7 @@ import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 import NumbersIcon from '@mui/icons-material/Numbers';
 
-const TrackItem = ({number, title, duration}) => {
+const TrackItem = ({number, title, duration, onClick}) => {
     return (
         <div  style={{
             display: 'flex',
@@ -28,8 +28,8 @@ const TrackItem = ({number, title, duration}) => {
                 <Typography component={'p'} sx={{ textTransform: 'capitalize', marginRight: '10px'}}>
                     {duration}
                 </Typography>
-                <IconButton> <PlayCircleFilledWhiteIcon/> </IconButton>
-                <IconButton> <StopCircleIcon/> </IconButton>
+                <IconButton onClick={onClick}> <PlayCircleFilledWhiteIcon/> </IconButton>
+                {/*<IconButton> <StopCircleIcon/> </IconButton>*/}
 
             </div>
 

@@ -1,5 +1,6 @@
 import axiosApi from "../../axiosApi";
 import AxiosApi from "../../axiosApi";
+import {toast} from "react-toastify";
 
 export const FETCH_ARTISTS_REQUEST = 'FETCH_ARTISTS_REQUEST';
 export const FETCH_ARTISTS_SUCCESS = 'FETCH_ARTISTS_SUCCESS';
@@ -21,6 +22,10 @@ export const FETCH_TRACKS_REQUEST = 'FETCH_TRACKS_REQUEST';
 export const FETCH_TRACKS_SUCCESS = 'FETCH_TRACKS_SUCCESS';
 export const FETCH_TRACKS_FAILURE = 'FETCH_TRACKS_FAILURE';
 
+export const ADD_TRACK_TO_HISTORY_REQUEST = 'ADD_TRACK_TO_HISTORY_REQUEST';
+export const ADD_TRACK_TO_HISTORY_SUCCESS = 'ADD_TRACK_TO_HISTORY_SUCCESS';
+export const ADD_TRACK_TO_HISTORY_FAILURE = 'ADD_TRACK_TO_HISTORY_FAILURE';
+
 const fetchArtistsRequest = () => ({type: FETCH_ARTISTS_REQUEST});
 const fetchArtistsSuccess = artists => ({type: FETCH_ARTISTS_SUCCESS, payload: artists});
 const fetchArtistsFailure = errors => ({type: FETCH_ARTISTS_FAILURE, payload: errors});
@@ -41,17 +46,37 @@ const fetchTracksRequest = () => ({type: FETCH_TRACKS_REQUEST});
 const fetchTracksSuccess = tracks => ({type: FETCH_TRACKS_SUCCESS, payload: tracks});
 const fetchTracksFailure = errors => ({type: FETCH_ALBUMS_FAILURE, payload: errors});
 
+const addTrackToHistoryRequest = () => ({type: ADD_TRACK_TO_HISTORY_REQUEST});
+const addTrackToHistorySuccess = () => ({type: ADD_TRACK_TO_HISTORY_SUCCESS});
+const addTrackToHistoryFailure = (error) => ({type: ADD_TRACK_TO_HISTORY_FAILURE, payload: error});
+
 export const fetchArtists = () => {
-  return async dispatch => {
+    return async (dispatch, getState) => {
       try{
+          const headers = {
+              'Authorization': getState().users.user && getState().users.user.token,
+          };
+
           dispatch(fetchArtistsRequest());
 
-          const response = await axiosApi('/artists');
+          const response = await axiosApi('/artists', {headers});
 
           if(response) {
               dispatch(fetchArtistsSuccess(response.data));
           }
       } catch (e) {
+          if (e.response.status === 401) {
+              toast.warn('You need login!', {
+                  position: "top-right",
+                  autoClose: 3500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+              });
+          }
+
           dispatch(fetchArtistsFailure(e));
       }
   };
@@ -110,6 +135,7 @@ export const fetchAlbum = id => {
       }
   };
 };
+
 export const fetchArtist = id => {
   return async dispatch => {
       try {
@@ -126,4 +152,25 @@ export const fetchArtist = id => {
           dispatch(fetchArtistFailure(e));
       }
   };
+};
+
+export const addTrackToHistory = id => {
+    return async (dispatch, getState) => {
+        try {
+            const headers = {
+                'Authorization': getState().users.user && getState().users.user.token,
+            };
+
+           await  dispatch(addTrackToHistoryRequest());
+
+            const response  = await axiosApi.post('/track_history', {track: id}, {headers});
+            await dispatch(addTrackToHistorySuccess());
+            console.log(response);
+        }  catch (e) {
+            if(e.response && e.response.data) {
+                dispatch(addTrackToHistoryFailure(e.response.data));
+            }
+           dispatch(addTrackToHistoryFailure(e.message));
+        }
+    };
 };

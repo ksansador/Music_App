@@ -22,6 +22,7 @@ const Albums = ({match}) => {
         return <Redirect to="/login"/>
     }
 
+
     return (
         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between'}}>
             {loading ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>

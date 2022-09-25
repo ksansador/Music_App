@@ -5,6 +5,7 @@ import Albums from "./containers/Albums/Albums";
 import Tracks from "./containers/Tracks/Tracks";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Login/Login";
+import TrackHistory from "./containers/TrackHistory/TrackHistory";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path={'/tracks/:id'} component={Tracks}/>
           <Route path={'/register'} component={Register}/>
           <Route path={'/login'} component={Login}/>
+          <Route path={'/track_history'} component={TrackHistory}/>
       </Switch>
     </Layout>
   );

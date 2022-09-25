@@ -3,6 +3,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import {Link} from "react-router-dom";
 
 const UserMenu = ({user}) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -37,6 +38,15 @@ const UserMenu = ({user}) => {
           'aria-labelledby': 'basic-button',
         }}
       >
+        <MenuItem onClick={handleClose}>
+            <Link to={'/track_history'} style={{color: 'inherit',
+                textDecoration: 'none',
+                '&:hover': {
+                    color: 'inherit'
+                }}}>
+                Track History
+            </Link>
+        </MenuItem>
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>

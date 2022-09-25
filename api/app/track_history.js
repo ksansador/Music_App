@@ -2,9 +2,10 @@ const express = require('express');
 const User = require('../models/User');
 const TrackHistory = require("../models/TrackHistory");
 const Track = require("../models/Track");
+const auth = require("../middleware/auth");
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
    const token = req.get('Authorization');
    const { track } = req.body;
 
@@ -23,9 +24,8 @@ router.post('/', async (req, res) => {
     }
 
     const trackHistoryData = {
-        user: user.id,
+        user,
         datetime: new Date().toISOString(),
-        track
     };
 
     try{
@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
         if(!check) {
             return res.status(404).send({error: 'Not found'});
         }
+        trackHistoryData.track = check;
 
         const trackHistory = new TrackHistory(trackHistoryData);
         await trackHistory.save();
