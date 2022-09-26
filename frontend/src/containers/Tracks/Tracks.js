@@ -49,6 +49,7 @@ const Tracks = ({match}) => {
                                     title={item.title}
                                     duration={item.duration}
                                     number={item.number}
+                                    url={item.url}
                                     onClick={() =>onTrackClick(item._id)}
                                 />
                             ))

@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 
 import NumbersIcon from '@mui/icons-material/Numbers';
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import Modal from "../UI/Modal/Modal";
+import ReactPlayer from "react-player";
 
-const TrackItem = ({number, title, duration, onClick}) => {
+const TrackItem = ({number, title, duration, url, onClick}) => {
+    const [show, setShow] = useState(false);
+    let player = 'There are no video';
+
+    const modalHandler = () => {
+        setShow(!show);
+    };
+
+    if(Boolean(url)) {
+        player = <ReactPlayer url={url} />
+    }
     return (
         <div  style={{
             display: 'flex',
@@ -17,6 +29,9 @@ const TrackItem = ({number, title, duration, onClick}) => {
             padding: '10px 20px',
             borderRadius: '20px'
         }}>
+            <Modal show={show} closed={modalHandler}>
+                {player}
+            </Modal>
 
             <Typography variant={'h5'} sx={{ textTransform: 'capitalize'}}>
                 Track <NumbersIcon/>{number}
@@ -28,21 +43,14 @@ const TrackItem = ({number, title, duration, onClick}) => {
                 <Typography component={'p'} sx={{ textTransform: 'capitalize', marginRight: '10px'}}>
                     {duration}
                 </Typography>
-                <IconButton onClick={onClick}> <YouTubeIcon fontSize={'large'}/> </IconButton>
-                {/*<IconButton sx={{marginRight: '20px'}}></IconButton>*/}
-                {/*<IconButton> <StopCircleIcon/> </IconButton>*/}
+                <IconButton onClick={() => {
+                    modalHandler();
+                    onClick();
+                }}>
+                    <YouTubeIcon fontSize={'large'}/>
+                </IconButton>
 
             </div>
-
-
-            {/*<IconButton*/}
-            {/*    component={Link} to={'/tracks/' + id}*/}
-            {/*    sx={{ color: 'rgba(148,148,148,0.54)' }}*/}
-            {/*    aria-label={`info about ${title}`}*/}
-            {/*>*/}
-
-            {/*    <InfoIcon />*/}
-            {/*</IconButton>*/}
 
         </div>
     );

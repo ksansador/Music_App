@@ -47,6 +47,7 @@ const TrackHistory = () => {
                                     datetime={item.datetime}
                                     number={item.track.number}
                                     duration={item.track.duration}
+                                    url={item.track.url}
                                     // onClick={() =>onTrackClick(item._id)}
                                 />
                             ))

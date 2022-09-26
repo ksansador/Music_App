@@ -30,17 +30,23 @@ router.get('/', async( req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-   const { title, album, duration, number } = req.body;
+router.post('/',  async (req, res) => {
+   const { title, album, duration, number, url } = req.body;
 
    if ( !title || !album || !duration || !number) {
        return res.status(404).send({error: 'Data not valid'});
    }
 
-   const trackData = { title, album , duration, number };
+   const trackData = {
+       title,
+       album ,
+       duration,
+       number,
+       url: url || null,
+   };
 
    try {
-    const track = new Track (trackData);
+    const track = new Track(trackData);
     await track.save();
 
     res.send(track);

@@ -20,8 +20,8 @@ const TrackSchema = new Schema({
     number: {
         type: Number,
         required: true,
-        unique: true
-    }
+    },
+    url: String,
 });
 
 TrackSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.'});
