@@ -4,8 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchHistory} from "../../store/actions/trackHistoryActions";
 import {Box} from "@mui/material";
 import Title from "../../components/UI/Title/Title";
-
+import HistoryIcon from '@mui/icons-material/History';
 import TrackHistoryItem from "../../components/TrackHistoryItem/TrackHistoryItem";
+import {addTrackToHistory} from "../../store/actions/musicActions";
 
 const TrackHistory = () => {
     const user = useSelector(state => state.users.user);
@@ -18,8 +19,13 @@ const TrackHistory = () => {
     }, [dispatch]);
 
     if (!user) {
-        return <Redirect to="/login"/>
+        return <Redirect to="/login"/>;
     }
+
+    const onTrackClick = async (id) => {
+        await dispatch(addTrackToHistory(id));
+        await dispatch(fetchHistory());
+    };
 
     return (
         <div style={{
@@ -36,7 +42,9 @@ const TrackHistory = () => {
                             <Title
                                 albumTitle={user.username}
                                 artistTitle={null}
-                            >'s history</Title>
+                            >
+                                's history <HistoryIcon sx={{marginLeft: 2}}/>
+                            </Title>
                         )}
                         { tracks &&
                             tracks.map(item => (
@@ -48,7 +56,7 @@ const TrackHistory = () => {
                                     number={item.track.number}
                                     duration={item.track.duration}
                                     url={item.track.url}
-                                    // onClick={() =>onTrackClick(item._id)}
+                                    onClick={() =>onTrackClick(item.track._id)}
                                 />
                             ))
 

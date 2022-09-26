@@ -22,9 +22,12 @@ const Albums = ({match}) => {
         return <Redirect to="/login"/>
     }
 
-
     return (
-        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between'}}>
+        <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between'
+        }}>
             {loading ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
                 : (
                     <>
@@ -41,6 +44,7 @@ const Albums = ({match}) => {
                                     release={item.year}
                                     tracks={item.count}
                                     id={item._id}
+                                    image={item.image}
                                 />
                         ))}
                     </>

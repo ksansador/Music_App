@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Typography} from "@mui/material";
+import {Paper, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 
 import NumbersIcon from '@mui/icons-material/Numbers';
@@ -9,7 +9,9 @@ import ReactPlayer from "react-player";
 
 const TrackItem = ({number, title, duration, url, onClick}) => {
     const [show, setShow] = useState(false);
-    let player = 'There are no video';
+    let player = <Typography component={'p'}>
+        No video here, but imagine what you listened it anyway...
+    </Typography>;
 
     const modalHandler = () => {
         setShow(!show);
@@ -19,16 +21,16 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
         player = <ReactPlayer url={url} />
     }
     return (
-        <div  style={{
+        <Paper  style={{
             display: 'flex',
             width: '70%',
             justifyContent: 'space-between',
             alignItems: 'center',
             margin: '20px',
-            border: '1px solid #ccc',
             padding: '10px 20px',
-            borderRadius: '20px'
-        }}>
+        }}
+                elevation={3}
+        >
             <Modal show={show} closed={modalHandler}>
                 {player}
             </Modal>
@@ -52,7 +54,7 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
 
             </div>
 
-        </div>
+        </Paper>
     );
 };
 

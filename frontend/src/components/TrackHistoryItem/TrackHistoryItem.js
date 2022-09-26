@@ -12,10 +12,12 @@ import {useState} from "react";
 import Modal from "../UI/Modal/Modal";
 import ReactPlayer from 'react-player'
 
-const  TrackHistoryItem = ({number, title, artist, datetime, duration, url}) => {
+const  TrackHistoryItem = ({number, title, artist, datetime, duration, url, onClick}) => {
     const [open, setOpen] = useState(false);
     const [show, setShow] = useState(false);
-    let player = 'There are no video';
+    let player = <Typography component={'p'}>
+        No video here, but imagine what you listened it anyway...
+    </Typography>;
 
     const handleClick = () => {
         setOpen(!open);
@@ -69,7 +71,12 @@ const  TrackHistoryItem = ({number, title, artist, datetime, duration, url}) => 
                         </div>
                         <div>
                             {/*<IconButton sx={{marginRight: '20px'}}> <PlayCircleFilledWhiteIcon fontSize={'large'}/> </IconButton>*/}
-                            <IconButton sx={{marginRight: '20px'}} onClick={modalHandler}> <YouTubeIcon fontSize={'large'}/> </IconButton>
+                            <IconButton sx={{marginRight: '20px'}} onClick={() => {
+                                modalHandler();
+                                    onClick();
+                            }}>
+                                <YouTubeIcon fontSize={'large'}/>
+                            </IconButton>
                         </div>
                     </div>
                 </Collapse>
