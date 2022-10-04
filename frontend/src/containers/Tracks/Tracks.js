@@ -23,6 +23,7 @@ const Tracks = ({match}) => {
     if (!user) {
         return <Redirect to="/login"/>
     }
+
      const onTrackClick = async (id) => {
          await dispatch(addTrackToHistory(id));
      };

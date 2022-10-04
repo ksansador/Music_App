@@ -6,6 +6,7 @@ const auth = require("../middleware/auth");
 const Artist = require("../models/Artist");
 const Album = require("../models/Album");
 const router = express.Router();
+const dayjs = require('dayjs')
 
 router.get('/', auth, async (req, res) => {
     const token = req.get('Authorization');
@@ -60,7 +61,7 @@ router.post('/', auth, async (req, res) => {
 
     const trackHistoryData = {
         user,
-        datetime: new Date().toISOString(),
+        datetime: dayjs().format('MMMM D, YYYY h:mm A'),
     };
 
     try{

@@ -6,6 +6,7 @@ import {Box} from "@mui/material";
 import Title from "../../components/UI/Title/Title";
 import HistoryIcon from '@mui/icons-material/History';
 import TrackHistoryItem from "../../components/TrackHistoryItem/TrackHistoryItem";
+import {toast} from "react-toastify";
 
 const TrackHistory = () => {
     const user = useSelector(state => state.users.user);
@@ -18,6 +19,15 @@ const TrackHistory = () => {
     }, [dispatch]);
 
     if (!user) {
+        toast.warn('You need to login!', {
+            position: "top-right",
+            autoClose: 3500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
         return <Redirect to="/login"/>;
     }
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -6,36 +7,18 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import {Paper, Typography} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import {useState} from "react";
-import Modal from "../UI/Modal/Modal";
-import ReactPlayer from 'react-player'
 
-const  TrackHistoryItem = ({number, title, artist, datetime, duration, url, onClick}) => {
+const  TrackHistoryItem = ({number, title, artist, datetime, duration}) => {
     const [open, setOpen] = useState(false);
-    const [show, setShow] = useState(false);
-    let player = <Typography component={'p'}>
-        No video here, but imagine what you listened it anyway...
-    </Typography>;
 
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.preventDefault();
         setOpen(!open);
     };
 
-    const modalHandler = () => {
-        setShow(!show);
-    };
-
-    if(Boolean(url)) {
-        player = <ReactPlayer url={url} />;
-    }
-
     return (
         <>
-            <Modal show={show} closed={modalHandler}>
-                {player}
-            </Modal>
+
             <Paper
                 sx={{width: '80%', marginBottom: '10px'}}
                 elevation={2}
@@ -68,14 +51,6 @@ const  TrackHistoryItem = ({number, title, artist, datetime, duration, url, onCl
                             <Typography component={'p'} sx={{ fontSize: '16px'}}>
                                 datetime: {datetime}
                             </Typography>
-                        </div>
-                        <div>
-                            <IconButton sx={{marginRight: '20px'}} onClick={() => {
-                                modalHandler();
-                                    onClick();
-                            }}>
-                                <YouTubeIcon fontSize={'large'}/>
-                            </IconButton>
                         </div>
                     </div>
                 </Collapse>

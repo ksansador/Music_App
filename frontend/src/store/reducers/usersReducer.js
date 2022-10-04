@@ -1,6 +1,6 @@
 import {
     CLEAR_LOGIN_ERRORS,
-    CLEAR_REGISTER_ERRORS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS,
+    CLEAR_REGISTER_ERRORS, LOGIN_USER_FAILURE, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGOUT_USER,
     REGISTER_USER_FAILURE,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS
@@ -34,6 +34,9 @@ const usersReducer = (state = initialState, action) => {
           return {...state, loginLoading: false, loginError: action.payload};
       case CLEAR_LOGIN_ERRORS:
           return {...state, loginError: null};
+
+      case LOGOUT_USER:
+          return {...state, user: null};
 
       default:
           return state;

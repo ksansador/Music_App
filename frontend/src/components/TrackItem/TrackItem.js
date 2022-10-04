@@ -5,21 +5,29 @@ import IconButton from "@mui/material/IconButton";
 import NumbersIcon from '@mui/icons-material/Numbers';
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Modal from "../UI/Modal/Modal";
-import ReactPlayer from "react-player";
+import ReactPlayer from 'react-player/youtube'
 
 const TrackItem = ({number, title, duration, url, onClick}) => {
     const [show, setShow] = useState(false);
-    let player = <Typography component={'p'}>
-        No video here, but imagine what you listened it anyway...
-    </Typography>;
+    let player;
 
     const modalHandler = () => {
         setShow(!show);
     };
 
-    if(Boolean(url)) {
-        player = <ReactPlayer url={url} />
+    if(!!url) {
+        player =<IconButton onClick={() => {
+            modalHandler();
+            onClick();
+        }}>
+            <Modal show={show} closed={modalHandler}>
+                {/*<ReactPlayer url={url} />*/}
+                <ReactPlayer url={url} />
+            </Modal>
+            <YouTubeIcon fontSize={'large'}/>
+        </IconButton>
     }
+
     return (
         <Paper  style={{
             display: 'flex',
@@ -31,9 +39,8 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
         }}
                 elevation={3}
         >
-            <Modal show={show} closed={modalHandler}>
-                {player}
-            </Modal>
+
+
 
             <Typography variant={'h5'} sx={{ textTransform: 'capitalize'}}>
                 Track <NumbersIcon/>{number}
@@ -45,12 +52,7 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
                 <Typography component={'p'} sx={{ textTransform: 'capitalize', marginRight: '10px'}}>
                     {duration}
                 </Typography>
-                <IconButton onClick={() => {
-                    modalHandler();
-                    onClick();
-                }}>
-                    <YouTubeIcon fontSize={'large'}/>
-                </IconButton>
+                {player}
 
             </div>
 
