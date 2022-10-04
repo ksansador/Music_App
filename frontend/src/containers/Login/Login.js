@@ -116,7 +116,7 @@ const Login = () => {
 
                 <Grid container justifyContent="flex-end">
                     <Grid item>
-                        <Link  componen={RouterLink} to="/register">
+                        <Link  component={RouterLink} to="/register">
                             Or sign up
                         </Link>
                     </Grid>

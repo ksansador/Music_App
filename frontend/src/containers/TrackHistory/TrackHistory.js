@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react';
 import {Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchHistory} from "../../store/actions/trackHistoryActions";
+import {addTrackToHistory, fetchHistory} from "../../store/actions/trackHistoryActions";
 import {Box} from "@mui/material";
 import Title from "../../components/UI/Title/Title";
 import HistoryIcon from '@mui/icons-material/History';
 import TrackHistoryItem from "../../components/TrackHistoryItem/TrackHistoryItem";
-import {addTrackToHistory} from "../../store/actions/musicActions";
 
 const TrackHistory = () => {
     const user = useSelector(state => state.users.user);
     const dispatch = useDispatch();
-    const loading = useSelector(state => state.trackHistory.trackHistoryLoading);
+    const loading = useSelector(state => state.trackHistory.historyLoading);
     const tracks = useSelector(state => state.trackHistory.tracks);
 
     useEffect(() => {

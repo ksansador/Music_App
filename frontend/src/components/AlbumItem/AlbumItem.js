@@ -19,7 +19,7 @@ const AlbumItem = ({image, title, release, tracks, id}) => {
                     elevation={3}
             >
                 <Avatar
-                    src={`${image}?w=248&fit=crop&auto=format`}
+                    src={`https://localhost:8000/uploads/${image}?w=248&fit=crop&auto=format`}
                     alt={title}
                     sx={{ width: 100, height: 100, marginBottom: '15px' }}
                 />

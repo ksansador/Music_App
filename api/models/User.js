@@ -30,27 +30,28 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', async function(next) {
-    if(!this.isModified('password')) return next();
+    if (!this.isModified('password')) return next();
 
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+    const hash = await bcrypt.hash(this.password, salt);
 
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = hash;
 
     next();
 });
 
 UserSchema.set('toJSON', {
-   transform: (doc, ret) => {
-       delete ret.password;
-       return ret;
-   }
+    transform: (doc, ret) => {
+        delete ret.password;
+        return ret;
+    }
 });
 
 UserSchema.methods.checkPassword = function(password) {
-  return bcrypt.compare(password, this.password);
+    return bcrypt.compare(password, this.password);
 };
 
-UserSchema.methods.generateToken = function () {
+UserSchema.methods.generateToken = function() {
     this.token = nanoid();
 };
 

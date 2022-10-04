@@ -70,7 +70,6 @@ const  TrackHistoryItem = ({number, title, artist, datetime, duration, url, onCl
                             </Typography>
                         </div>
                         <div>
-                            {/*<IconButton sx={{marginRight: '20px'}}> <PlayCircleFilledWhiteIcon fontSize={'large'}/> </IconButton>*/}
                             <IconButton sx={{marginRight: '20px'}} onClick={() => {
                                 modalHandler();
                                     onClick();
