@@ -7,6 +7,7 @@ const config = require('../config');
 const Album = require('../models/Album');
 const Track = require("../models/Track");
 const router = express.Router();
+const permit = require("../middleware/permit");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

@@ -8,20 +8,20 @@ const  ArtistItem = ({image, title, id}) => {
 
     return (
         <Paper  sx={{
-            width: '30%',
+            width: '40%',
             margin: '20px',
             padding: '10px 20px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            flexWrap: 'wrap',
+            // flexWrap: 'wrap',
         }}
                 elevation={3}
         >
                 <Avatar
-                    src={`${image}?w=248&fit=crop&auto=format`}
+                    src={`http://localhost:8000/${image}?w=248&fit=crop&auto=format`}
                     alt={title}
-                    sx={{ width: 100, height: 100}}
+                    sx={{ width: 90,height: 90}}
                 />
                 <Typography variant={'h4'} sx={{ textTransform: 'capitalize'}}>
                     {title}

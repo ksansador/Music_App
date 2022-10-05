@@ -7,7 +7,7 @@ import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 const AlbumItem = ({image, title, release, tracks, id}) => {
     return (
             <Paper  sx={{
-                width: '25%',
+                width: '30%',
                 margin: '20px',
                 padding: '10px 20px',
                 display: 'flex',
@@ -19,11 +19,11 @@ const AlbumItem = ({image, title, release, tracks, id}) => {
                     elevation={3}
             >
                 <Avatar
-                    src={`https://localhost:8000/uploads/${image}?w=248&fit=crop&auto=format`}
+                    src={`http://localhost:8000/${image}?w=248&fit=crop&auto=format&origin=*`}
                     alt={title}
                     sx={{ width: 100, height: 100, marginBottom: '15px' }}
                 />
-                <Typography variant={'h3'} sx={{ textTransform: 'capitalize', marginBottom: '15px'}}>
+                <Typography variant={'h5'} sx={{ textAlign: 'center', textTransform: 'capitalize', marginBottom: '15px'}}>
                     {title}
                 </Typography>
                 <Typography component={'p'}  sx={{margin: '0 0 10px', textAlign: 'center'}}>

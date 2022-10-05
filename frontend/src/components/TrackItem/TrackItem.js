@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 import {Paper, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -5,11 +6,25 @@ import IconButton from "@mui/material/IconButton";
 import NumbersIcon from '@mui/icons-material/Numbers';
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Modal from "../UI/Modal/Modal";
-import ReactPlayer from 'react-player/youtube'
-
+import ReactPlayer from "react-player";
+import PlayCircleFilledTwoToneIcon from '@mui/icons-material/PlayCircleFilledTwoTone';
+import {toast} from "react-toastify";
 const TrackItem = ({number, title, duration, url, onClick}) => {
     const [show, setShow] = useState(false);
-    let player;
+    let player = <IconButton onClick={() => {
+        onClick();
+        toast.success('Tack added to history!', {
+            position: "top-right",
+            autoClose: 3500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    }}>
+        <PlayCircleFilledTwoToneIcon fontSize={'large'}/>
+    </IconButton>;
 
     const modalHandler = () => {
         setShow(!show);
@@ -21,7 +36,6 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
             onClick();
         }}>
             <Modal show={show} closed={modalHandler}>
-                {/*<ReactPlayer url={url} />*/}
                 <ReactPlayer url={url} />
             </Modal>
             <YouTubeIcon fontSize={'large'}/>
@@ -42,7 +56,7 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
 
 
 
-            <Typography variant={'h5'} sx={{ textTransform: 'capitalize'}}>
+            <Typography variant={'h6'} sx={{ textTransform: 'capitalize'}}>
                 Track <NumbersIcon/>{number}
             </Typography>
             <Typography variant={'h4'}  sx={{textTransform: 'capitalize'}}>

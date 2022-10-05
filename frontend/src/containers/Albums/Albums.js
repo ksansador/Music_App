@@ -27,7 +27,7 @@ const Albums = ({match}) => {
         <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-between'
+            justifyContent: 'center'
         }}>
             {loading ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
                 : (

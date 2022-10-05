@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        const {username, password, displayName, phone} = req.body;
-        const userData = {username, password, displayName, phone};
+        const {username, password} = req.body;
+        const userData = {username, password};
         const user = new User(userData);
 
         user.generateToken();
