@@ -1,4 +1,6 @@
 import axiosApi from "../../axiosApi";
+import {historyPush} from "./historyActions";
+import {toast} from "react-toastify";
 
 export const FETCH_ALBUMS_REQUEST = 'FETCH_ALBUMS_REQUEST';
 export const FETCH_ALBUMS_SUCCESS = 'FETCH_ALBUMS_SUCCESS';
@@ -8,6 +10,10 @@ export const FETCH_ALBUM_REQUEST = 'FETCH_ALBUM_REQUEST';
 export const FETCH_ALBUM_SUCCESS = 'FETCH_ALBUM_SUCCESS';
 export const FETCH_ALBUM_FAILURE = 'FETCH_ALBUM_FAILURE';
 
+export const CREATE_ALBUM_REQUEST = 'CREATE_ALBUM_REQUEST';
+export const CREATE_ALBUM_SUCCESS = 'CREATE_ALBUM_SUCCESS';
+export const CREATE_ALBUM_FAILURE = 'CREATE_ALBUM_FAILURE';
+
 const fetchAlbumsRequest = () => ({type: FETCH_ALBUMS_REQUEST});
 const fetchAlbumsSuccess = albums => ({type: FETCH_ALBUMS_SUCCESS, payload: albums});
 const fetchAlbumsFailure = errors => ({type: FETCH_ALBUMS_FAILURE, payload: errors});
@@ -15,6 +21,10 @@ const fetchAlbumsFailure = errors => ({type: FETCH_ALBUMS_FAILURE, payload: erro
 const fetchAlbumRequest = () => ({type: FETCH_ALBUM_REQUEST});
 const fetchAlbumSuccess = album => ({type: FETCH_ALBUM_SUCCESS, payload: album});
 const fetchAlbumFailure = errors => ({type: FETCH_ALBUM_FAILURE, payload: errors});
+
+const createAlbumRequest = () => ({type: CREATE_ALBUM_REQUEST});
+const createAlbumSuccess = () => ({type: CREATE_ALBUM_SUCCESS});
+const createAlbumFailure = error => ({type: CREATE_ALBUM_FAILURE, payload: error});
 
 export const fetchAlbums = id => {
     return async dispatch => {
@@ -50,4 +60,32 @@ export const fetchAlbum = id => {
             dispatch(fetchAlbumFailure(e));
         }
     };
+};
+
+export const createAlbum = (albumData) => {
+    return async dispatch => {
+        try {
+            dispatch(createAlbumRequest());
+            await axiosApi.post('/albums', albumData);
+            dispatch(createAlbumSuccess());
+            dispatch(historyPush('/'));
+            toast.success('Artist added!', {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(createAlbumFailure(e.response.data));
+            } else {
+                dispatch(createAlbumFailure({global: 'No internet'}));
+            }
+
+            throw e;
+        }
+    }
 };

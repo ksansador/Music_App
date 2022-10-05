@@ -75,9 +75,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', upload.single('image'), async (req,res) => {
    const { title, artist, year } = req.body;
 
-    if (!title || !artist || !year) {
-        return res.status(400).send({error: 'Data not valid'});
-    }
+    // if (!title || !artist || !year) {
+    //     return res.status(400).send({error: 'Data not valid'});
+    // }
 
     const albumData = {
         title,
@@ -87,7 +87,7 @@ router.post('/', upload.single('image'), async (req,res) => {
     };
 
     if (req.file) {
-        albumData.image = req.file.filename;
+        albumData.image =  'uploads/' + req.file.filename;
     }
 
     try{
@@ -96,7 +96,7 @@ router.post('/', upload.single('image'), async (req,res) => {
 
         res.send(album);
     } catch (e) {
-        res.status(400).send({error: e.errors});
+        res.status(400).send({errors: e.errors});
     }
 
 });

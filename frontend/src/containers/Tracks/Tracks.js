@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import {Box} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import TrackItem from "../../components/TrackItem/TrackItem";
 import Title from "../../components/UI/Title/Title";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {fetchAlbum} from "../../store/actions/albumsActions";
 import {fetchTracks} from "../../store/actions/tracksActions";
 import {addTrackToHistory} from "../../store/actions/trackHistoryActions";
@@ -40,10 +40,18 @@ const Tracks = ({match}) => {
                 : (
                     <>
                         { album && (
-                            <Title
-                                albumTitle={album.title}
-                                artistTitle={album.artist.title}
-                            />
+                            <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                                <Title
+                                    albumTitle={album.title}
+                                    artistTitle={album.artist.title}
+                                />
+
+                                <Button sx={{width: '20%'}} color="primary" component={Link} to="/tracks/new">
+                                    Add track
+                                </Button>
+
+                            </div>
+
                         )}
                         {( tracks && tracks.length !== 0) ?
                             tracks.map(item => (

@@ -59,7 +59,7 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
             <Typography variant={'h6'} sx={{ textTransform: 'capitalize'}}>
                 Track <NumbersIcon/>{number}
             </Typography>
-            <Typography variant={'h4'}  sx={{textTransform: 'capitalize'}}>
+            <Typography variant={'h5'}  sx={{textTransform: 'capitalize'}}>
                 {title}
             </Typography>
             <div style={{display: 'flex', alignItems: 'center'}}>

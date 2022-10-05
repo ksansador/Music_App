@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Box} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 import ArtistItem from "../../components/ArtistItem/ArtistItem";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {fetchArtists} from "../../store/actions/artistsActions";
 const Artists = () => {
     const dispatch = useDispatch();
@@ -21,6 +21,14 @@ const Artists = () => {
 
     return (
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div style={{width: '100%', display: 'flex', justifyContent: 'space-between'}}>
+                <Typography variant="h5">
+                    Artists
+                </Typography>
+                <Button color="primary" sx={{width: '10%'}} component={Link} to="/artists/new">
+                    Add Artist
+                </Button>
+            </div>
             {loading
                 ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
                 : (artists && artists.length !== 0) ?

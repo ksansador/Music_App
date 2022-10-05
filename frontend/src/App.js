@@ -6,14 +6,20 @@ import Tracks from "./containers/Tracks/Tracks";
 import Register from "./containers/Register/Register";
 import Login from "./containers/Login/Login";
 import TrackHistory from "./containers/TrackHistory/TrackHistory";
+import NewArtist from "./containers/Artists/NewArtist/NewArtist";
+import NewAlbum from "./containers/Albums/NewAlbum/NewAlbum";
+import NewTrack from "./containers/Tracks/NewTrack/NewTrack";
 
 function App() {
   return (
     <Layout>
       <Switch>
         <Route path={'/'} exact component={Artists}/>
-          <Route path={'/albums/:id'} component={Albums}/>
-          <Route path={'/tracks/:id'} component={Tracks}/>
+        <Route path={'/artists/new'}  component={NewArtist}/>
+        <Route path={'/albums/new'} component={NewAlbum}/>
+        <Route path={'/albums/:id'} component={Albums}/>
+        <Route path={'/tracks/new'} component={NewTrack}/>
+        <Route path={'/tracks/:id'} component={Tracks}/>
           <Route path={'/register'} component={Register}/>
           <Route path={'/login'} component={Login}/>
           <Route path={'/track_history'} component={TrackHistory}/>

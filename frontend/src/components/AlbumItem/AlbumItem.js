@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 
 const AlbumItem = ({image, title, release, tracks, id}) => {
+
     return (
             <Paper  sx={{
                 width: '30%',
