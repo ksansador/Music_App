@@ -1,6 +1,8 @@
 const express =require('express');
 const Track = require('../models/Track');
 const Album = require("../models/Album");
+const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 const router = express.Router();
 
 router.get('/', async( req, res) => {
@@ -53,6 +55,23 @@ router.post('/',  async (req, res) => {
    }catch (e) {
        res.status(400).send({errors: e.errors});
    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res) => {
+    const trackId = req.params.id;
+
+    try {
+        const response =  await Track.deleteOne({_id: trackId});
+
+        if( response['deletedCount']) {
+            res.send('Success');
+        } else {
+            res.status(403).send({error: 'Deleted failed'});
+        }
+
+    } catch (e) {
+        res.sendStatus(500);
+    }
 });
 
 module.exports = router;

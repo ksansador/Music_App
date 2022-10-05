@@ -22,6 +22,10 @@ const TrackSchema = new Schema({
         required: true,
     },
     url: String,
+    publish: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 TrackSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.'});

@@ -14,6 +14,10 @@ export const CREATE_ARTIST_REQUEST = 'CREATE_ARTIST_REQUEST';
 export const CREATE_ARTIST_SUCCESS = 'CREATE_ARTIST_SUCCESS';
 export const CREATE_ARTIST_FAILURE = 'CREATE_ARTIST_FAILURE';
 
+export const DELETE_ARTIST_REQUEST = 'DELETE_ARTIST_REQUEST';
+export const DELETE_ARTIST_SUCCESS = 'DELETE_ARTIST_SUCCESS';
+export const DELETE_ARTIST_FAILURE = 'DELETE_ARTIST_FAILURE';
+
 const fetchArtistsRequest = () => ({type: FETCH_ARTISTS_REQUEST});
 const fetchArtistsSuccess = artists => ({type: FETCH_ARTISTS_SUCCESS, payload: artists});
 const fetchArtistsFailure = errors => ({type: FETCH_ARTISTS_FAILURE, payload: errors});
@@ -25,6 +29,10 @@ const fetchArtistFailure = errors => ({type: FETCH_ARTIST_FAILURE, payload: erro
 const createArtistRequest = () => ({type: CREATE_ARTIST_REQUEST});
 const createArtistSuccess = () => ({type: CREATE_ARTIST_SUCCESS});
 const createArtistFailure = error => ({type: CREATE_ARTIST_FAILURE, payload: error});
+
+const deleteArtistRequest = () => ({type: DELETE_ARTIST_REQUEST});
+const deleteArtistSuccess = () => ({type: DELETE_ARTIST_SUCCESS});
+const deleteArtistFailure = (error) => ({type: DELETE_ARTIST_FAILURE, payload: error});
 
 export const fetchArtists = () => {
     return async (dispatch, getState) => {
@@ -102,4 +110,25 @@ export const createArtist = (artistData) => {
             throw e;
         }
     }
+};
+
+export const deleteArtist = id => {
+    return async dispatch => {
+        try {
+            dispatch(deleteArtistRequest());
+            await axiosApi.delete('/artists/' + id);
+            dispatch(deleteArtistSuccess());
+            toast.success('Delete success!', {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } catch (e) {
+            dispatch(deleteArtistFailure(e));
+        }
+    };
 };

@@ -7,6 +7,7 @@ const config = require('../config');
 const Artist = require('../models/Artist');
 const auth = require("../middleware/auth");
 const router = express.Router();
+const permit = require("../middleware/permit");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -67,6 +68,23 @@ router.post('/', auth, upload.single('image'), async (req,res) => {
         res.send(artist);
     } catch (e) {
         res.status(400).send({errors: e.errors});
+    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res) => {
+    const artistId = req.params.id;
+
+    try {
+        const response =  await Artist.deleteOne({_id: artistId});
+
+        if( response['deletedCount']) {
+            res.send('Success');
+        } else {
+            res.status(403).send({error: 'Deleted failed'});
+        }
+
+    } catch (e) {
+        res.sendStatus(500);
     }
 });
 

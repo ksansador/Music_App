@@ -50,8 +50,33 @@ const UserMenu = ({user}) => {
                 History
             </Link>
         </MenuItem>
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>
+            <Link to={'/artists/new'} style={{color: 'inherit',
+                textDecoration: 'none',
+                '&:hover': {
+                    color: 'inherit'
+                }}}>
+                New artist
+            </Link>
+        </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link to={'/albums/new'} style={{color: 'inherit',
+                textDecoration: 'none',
+                '&:hover': {
+                    color: 'inherit'
+                }}}>
+                New albums
+            </Link>
+        </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Link to={'/tracks/new'} style={{color: 'inherit',
+                textDecoration: 'none',
+                '&:hover': {
+                    color: 'inherit'
+                }}}>
+                New track
+            </Link>
+        </MenuItem>
         <MenuItem onClick={() => dispatch(logoutUser())}>Logout</MenuItem>
       </Menu>
     </div>

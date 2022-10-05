@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react';
-import {Paper, Typography} from "@mui/material";
+import {Button, Paper, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 
 import NumbersIcon from '@mui/icons-material/Numbers';
@@ -9,8 +9,16 @@ import Modal from "../UI/Modal/Modal";
 import ReactPlayer from "react-player";
 import PlayCircleFilledTwoToneIcon from '@mui/icons-material/PlayCircleFilledTwoTone';
 import {toast} from "react-toastify";
-const TrackItem = ({number, title, duration, url, onClick}) => {
+import {useDispatch, useSelector} from "react-redux";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {deleteTrack, fetchTracks} from "../../store/actions/tracksActions";
+
+
+const TrackItem = ({id, number, title, duration, url, onClick, albumId}) => {
     const [show, setShow] = useState(false);
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.users.user);
+
     let player = <IconButton onClick={() => {
         onClick();
         toast.success('Tack added to history!', {
@@ -25,6 +33,7 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
     }}>
         <PlayCircleFilledTwoToneIcon fontSize={'large'}/>
     </IconButton>;
+
 
     const modalHandler = () => {
         setShow(!show);
@@ -66,7 +75,21 @@ const TrackItem = ({number, title, duration, url, onClick}) => {
                 <Typography component={'p'} sx={{ textTransform: 'capitalize', marginRight: '10px'}}>
                     {duration}
                 </Typography>
-                {player}
+
+                {player &&
+                    (    user?.role === 'admin' &&
+                    <IconButton
+                        component={Button}
+                        onClick={ async()=> {
+                            await dispatch(deleteTrack(id));
+                            await dispatch(fetchTracks(albumId));
+                        }}
+                        sx={{ color: 'rgba(148,148,148,0.54)' }}
+                    >
+                        <DeleteIcon />
+                    </IconButton>)
+
+                }
 
             </div>
 

@@ -1,10 +1,15 @@
 import React from 'react';
-import {Avatar, Paper, Typography} from "@mui/material";
+import {Avatar, Button, Paper, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {Link} from "react-router-dom";
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import DeleteIcon from "@mui/icons-material/Delete";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteAlbum, fetchAlbums} from "../../store/actions/albumsActions";
 
-const AlbumItem = ({image, title, release, tracks, id}) => {
+const AlbumItem = ({image, title, release, tracks, id, artistId}) => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.users.user);
 
     return (
             <Paper  sx={{
@@ -20,7 +25,7 @@ const AlbumItem = ({image, title, release, tracks, id}) => {
                     elevation={3}
             >
                 <Avatar
-                    src={`http://localhost:8000/${image}?w=248&fit=crop&auto=format&origin=*`}
+                    src={`http://localhost:8000/${image}?w=248&fit=crop&auto=format`}
                     alt={title}
                     sx={{ width: 100, height: 100, marginBottom: '15px' }}
                 />
@@ -33,14 +38,31 @@ const AlbumItem = ({image, title, release, tracks, id}) => {
                 <Typography component={'p'} sx={{ textTransform: 'capitalize'}}>
                     Tracks: {tracks}
                 </Typography>
+                <div>
+                    <IconButton
+                        component={Link} to={'/tracks/' + id}
+                        sx={{ color: 'rgba(148,148,148,0.54)' }}
+                        aria-label={`info about ${title}`}
+                    >
+                        <ArrowDropDownCircleIcon />
+                    </IconButton>
+                    {
+                        user?.role === 'admin' &&
+                        <IconButton
+                            component={Button}
+                            onClick={ async()=> {
+                                await dispatch(deleteAlbum(id));
+                                await dispatch(fetchAlbums(artistId));
+                            }}
+                            sx={{ color: 'rgba(148,148,148,0.54)' }}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    }
+                </div>
 
-                <IconButton
-                    component={Link} to={'/tracks/' + id}
-                    sx={{ color: 'rgba(148,148,148,0.54)' }}
-                    aria-label={`info about ${title}`}
-                >
-                    <ArrowDropDownCircleIcon />
-                </IconButton>
+
+
             </Paper>
     );
 };

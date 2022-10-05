@@ -1,10 +1,15 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-import {Avatar, Paper, Typography} from "@mui/material";
+import {Avatar, Button, Paper, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
+import {useDispatch, useSelector} from "react-redux";
+import {deleteArtist, fetchArtists} from "../../store/actions/artistsActions";
 
 const  ArtistItem = ({image, title, id}) => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.users.user);
 
     return (
         <Paper  sx={{
@@ -26,14 +31,32 @@ const  ArtistItem = ({image, title, id}) => {
                 <Typography variant={'h4'} sx={{ textTransform: 'capitalize'}}>
                     {title}
                 </Typography>
+                <div>
+                    <IconButton
+                        component={Link} to={'/albums/' + id}
+                        sx={{ color: 'rgba(148,148,148,0.54)' }}
+                        aria-label={`info about ${title}`}
+                    >
+                        <InfoIcon />
+                    </IconButton>
 
-                <IconButton
-                    component={Link} to={'/albums/' + id}
-                    sx={{ color: 'rgba(148,148,148,0.54)' }}
-                    aria-label={`info about ${title}`}
-                >
-                    <InfoIcon />
-                </IconButton>
+                    {
+                        user?.role === 'admin' &&
+                        <IconButton
+                            component={Button}
+                            onClick={ async()=> {
+                                await dispatch(deleteArtist(id));
+                                await dispatch(fetchArtists());
+                            }}
+                            sx={{ color: 'rgba(148,148,148,0.54)' }}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    }
+
+
+                </div>
+
         </Paper>
     );
 };

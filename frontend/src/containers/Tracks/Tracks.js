@@ -57,10 +57,12 @@ const Tracks = ({match}) => {
                             tracks.map(item => (
                                 <TrackItem
                                     key={item._id}
+                                    id={item._id}
                                     title={item.title}
                                     duration={item.duration}
                                     number={item.number}
                                     url={item.url}
+                                    albumId={match.params.id}
                                     onClick={() =>onTrackClick(item._id)}
                                 />
                             )) :

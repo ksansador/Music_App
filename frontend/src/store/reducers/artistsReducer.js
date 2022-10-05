@@ -1,6 +1,6 @@
 import {
     CREATE_ARTIST_FAILURE,
-    CREATE_ARTIST_REQUEST, CREATE_ARTIST_SUCCESS,
+    CREATE_ARTIST_REQUEST, CREATE_ARTIST_SUCCESS, DELETE_ARTIST_FAILURE, DELETE_ARTIST_REQUEST, DELETE_ARTIST_SUCCESS,
     FETCH_ARTIST_FAILURE,
     FETCH_ARTIST_REQUEST, FETCH_ARTIST_SUCCESS,
     FETCH_ARTISTS_FAILURE,
@@ -38,6 +38,13 @@ const artistsReducer = (state = initialState, actions ) => {
         case CREATE_ARTIST_SUCCESS:
             return {...state, createArtistLoading: false};
         case CREATE_ARTIST_FAILURE:
+            return {...state, createArtistError: actions.payload, createArtistLoading: false};
+
+        case DELETE_ARTIST_REQUEST:
+            return {...state, createArtistError: null, createArtistLoading: true};
+        case DELETE_ARTIST_SUCCESS:
+            return {...state, createArtistLoading: false};
+        case DELETE_ARTIST_FAILURE:
             return {...state, createArtistError: actions.payload, createArtistLoading: false};
 
         default:

@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {Button, Grid} from "@mui/material";
 import FormElement from "../../../components/UI/Form/FormElement/FormElement";
 import FormSelect from "../../../components/UI/Form/FormSelect/FormSelect";
-import {fetchAlbums} from "../../../store/actions/albumsActions";
 import {createTrack} from "../../../store/actions/tracksActions";
+import {fetchAlbums} from "../../../store/actions/albumsActions";
 
 const NewTrack = () => {
     const dispatch = useDispatch();

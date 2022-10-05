@@ -53,6 +53,7 @@ const Albums = ({match}) => {
                                     tracks={item.count}
                                     id={item._id}
                                     image={item.image}
+                                    artistId={match.params.id}
                                 />
                         )) :
                             <Box sx={{textAlign: 'center'}}>There are no albums ...</Box>
