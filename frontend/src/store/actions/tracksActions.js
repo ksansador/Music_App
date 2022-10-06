@@ -112,7 +112,7 @@ export const publishTrack = id => {
             dispatch(publishTrackRequest());
             await axiosApi.put(`/tracks/${id}/publish`);
             dispatch(publishTrackSuccess());
-            toast.success('Track added!', {
+            toast.success('Track send to request!', {
                 position: "top-right",
                 autoClose: 3500,
                 hideProgressBar: false,

@@ -76,10 +76,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', upload.single('image'), async (req,res) => {
    const { title, artist, year } = req.body;
 
-    // if (!title || !artist || !year) {
-    //     return res.status(400).send({error: 'Data not valid'});
-    // }
-
     const albumData = {
         title,
         artist,

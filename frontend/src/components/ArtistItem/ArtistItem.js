@@ -7,10 +7,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {useDispatch, useSelector} from "react-redux";
 import {deleteArtist, fetchArtists, publishArtist} from "../../store/actions/artistsActions";
 import PublishIcon from '@mui/icons-material/Publish';
+import imageNotAvailable from "../../assets/no-photo.png";
+import {apiUrl} from "../../config";
 
 const  ArtistItem = ({image, title, id, show}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
+
+    let avatar = imageNotAvailable;
+
+    if (image) {
+        avatar = apiUrl + '/' + image;
+    }
 
     return (
         <Paper  sx={{
@@ -20,12 +28,11 @@ const  ArtistItem = ({image, title, id, show}) => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            // flexWrap: 'wrap',
         }}
                 elevation={3}
         >
                 <Avatar
-                    src={`http://localhost:8000/${image}?w=248&fit=crop&auto=format`}
+                    src={`${avatar}?w=248&fit=crop&auto=format`}
                     alt={title}
                     sx={{ width: 90,height: 90}}
                 />
@@ -55,7 +62,7 @@ const  ArtistItem = ({image, title, id, show}) => {
                         </IconButton>
                     }
                     {
-                        show  &&
+                        show  && user?.role === 'admin' &&
                         <IconButton
                             component={Button}
                             onClick={ async()=> {

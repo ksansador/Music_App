@@ -63,8 +63,6 @@ const TrackItem = ({id, number, title, duration, url, onClick, albumId, show}) =
                 elevation={3}
         >
 
-
-
             <Typography variant={'h6'} sx={{ textTransform: 'capitalize'}}>
                 Track <NumbersIcon/>{number}
             </Typography>
@@ -92,7 +90,7 @@ const TrackItem = ({id, number, title, duration, url, onClick, albumId, show}) =
                 }
 
                 {
-                    show  &&
+                    show  && user?.role === 'admin' &&
                     <IconButton
                         component={Button}
                         onClick={ async()=> {

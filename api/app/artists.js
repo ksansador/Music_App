@@ -47,10 +47,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', auth, upload.single('image'), async (req,res) => {
     const { title, description } = req.body;
 
-    // if(!title) {
-    //     return res.status(400).send({error: 'Data not valid'});
-    // }
-
     const artistData = {
         title,
         description: description || null,

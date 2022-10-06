@@ -5,23 +5,30 @@ import FormElement from "../../../components/UI/Form/FormElement/FormElement";
 import FormSelect from "../../../components/UI/Form/FormSelect/FormSelect";
 import {createTrack} from "../../../store/actions/tracksActions";
 import {fetchAlbums} from "../../../store/actions/albumsActions";
+import {fetchArtists} from "../../../store/actions/artistsActions";
 
 const NewTrack = () => {
     const dispatch = useDispatch();
     const error = useSelector( state => state.tracks.createTrackError);
     const albums = useSelector(state => state.albums.albums);
-
-    useEffect(() => {
-        dispatch(fetchAlbums());
-    }, [dispatch]);
+    const artists = useSelector(state => state.artists.artists);
 
     const [state, setState] = useState({
         title: '',
+        artist: '',
         album: '',
         duration: '',
         number: '',
         url: '',
     });
+
+    useEffect(() => {
+        dispatch(fetchArtists());
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(fetchAlbums(state.artist));
+    }, [dispatch, state.artist]);
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;
@@ -59,7 +66,16 @@ const NewTrack = () => {
                 direction="column"
                 rowSpacing={2}
             >
-                {albums && <FormSelect
+                {artists && <FormSelect
+                    label="Artist"
+                    required
+                    onChange={inputChangeHandler}
+                    value={state.artist}
+                    name="artist"
+                    options={artists}
+                    error={getFieldError('artist')}
+                />
+                }{albums && <FormSelect
                     label="Album"
                     required
                     onChange={inputChangeHandler}

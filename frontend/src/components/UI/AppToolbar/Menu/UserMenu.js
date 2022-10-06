@@ -52,6 +52,17 @@ const UserMenu = ({user}) => {
                   </Link>
               </MenuItem>
           }
+          {user?.role === 'user' &&
+              <MenuItem onClick={handleClose}>
+                  <Link to={'/requests'} style={{color: 'inherit',
+                      textDecoration: 'none',
+                      '&:hover': {
+                          color: 'inherit'
+                      }}}>
+                      My Requests
+                  </Link>
+              </MenuItem>
+          }
         <MenuItem onClick={handleClose}>
             <Link to={'/track_history'} style={{color: 'inherit',
                 textDecoration: 'none',

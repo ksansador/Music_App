@@ -7,11 +7,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteAlbum, fetchAlbums, publishAlbum} from "../../store/actions/albumsActions";
 import PublishIcon from "@mui/icons-material/Publish";
+import imageNotAvailable from '../../assets/no-photo.png';
+import {apiUrl} from "../../config";
 
 const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
 
+    let avatar = imageNotAvailable;
+
+    if (image) {
+        avatar = apiUrl + '/' + image;
+    }
     return (
             <Paper  sx={{
                 width: '30%',
@@ -26,7 +33,7 @@ const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
                     elevation={3}
             >
                 <Avatar
-                    src={`http://localhost:8000/${image}?w=248&fit=crop&auto=format`}
+                    src={`${avatar}?w=248&fit=crop&auto=format`}
                     alt={title}
                     sx={{ width: 100, height: 100, marginBottom: '15px' }}
                 />
@@ -61,7 +68,7 @@ const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
                         </IconButton>
                     }
                     {
-                        show  &&
+                        show  && user?.role === 'admin' &&
                         <IconButton
                             component={Button}
                             onClick={ async()=> {
@@ -74,9 +81,6 @@ const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
                         </IconButton>
                     }
                 </div>
-
-
-
             </Paper>
     );
 };

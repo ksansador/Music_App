@@ -27,7 +27,7 @@ const PublishRequest = () => {
         dispatch(fetchTracks());
     }, [dispatch]);
 
-    if (!user || user.role !== 'admin') {
+    if (!user) {
         return <Redirect to="/login"/>
     }
 
