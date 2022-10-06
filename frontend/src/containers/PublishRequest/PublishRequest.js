@@ -22,9 +22,16 @@ const PublishRequest = () => {
     const tracks = useSelector(state => state.tracks.tracks);
 
     useEffect(() => {
-        dispatch(fetchArtists('?user=' + user._id));
-        dispatch(fetchAlbums('?user=' + user._id));
-        dispatch(fetchTracks('?user=' + user._id));
+        if(user && user.role === 'user') {
+            dispatch(fetchArtists('?user=' + user._id));
+            dispatch(fetchAlbums('?user=' + user._id));
+            dispatch(fetchTracks('?user=' + user._id));
+        } else if (user.role === 'admin'){
+            dispatch(fetchArtists(''));
+            dispatch(fetchAlbums(''));
+            dispatch(fetchTracks(''));
+        }
+
     }, [dispatch]);
 
     if (!user) {

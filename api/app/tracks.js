@@ -5,10 +5,9 @@ const auth = require("../middleware/auth");
 const permit = require("../middleware/permit");
 const router = express.Router();
 
-router.get('/', async( req, res) => {
+router.get('/', auth, async( req, res) => {
     const query = {};
     const sort = {};
-    query.user = req.query.user;
 
     if(req.query.album) {
         query.album = req.query.album;
@@ -39,7 +38,7 @@ router.get('/', async( req, res) => {
     }
 });
 
-router.post('/',  async (req, res) => {
+router.post('/', auth, permit('user', 'admin'), async (req, res) => {
    const { title, album, duration, number, url } = req.body;
    const user = req.user;
 

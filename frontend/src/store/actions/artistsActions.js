@@ -114,7 +114,7 @@ export const createArtist = (artistData) => {
 
             throw e;
         }
-    }
+    };
 };
 
 export const deleteArtist = id => {

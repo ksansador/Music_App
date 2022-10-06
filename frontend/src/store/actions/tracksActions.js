@@ -76,7 +76,7 @@ export const createTrack = (trackData) => {
 
             throw e;
         }
-    }
+    };
 };
 
 export const deleteTrack = id => {

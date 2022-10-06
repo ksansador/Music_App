@@ -103,7 +103,7 @@ export const createAlbum = (albumData) => {
 
             throw e;
         }
-    }
+    };
 };
 
 export const deleteAlbum = id => {

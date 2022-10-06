@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage});
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
    const query = {};
    let sort = {year: +1}
 
@@ -68,7 +68,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/', upload.single('image'), async (req,res) => {
+router.post('/', auth, upload.single('image'), async (req,res) => {
    const { title, artist, year } = req.body;
     const user = req.user;
 
