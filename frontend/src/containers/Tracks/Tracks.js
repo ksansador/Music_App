@@ -55,6 +55,7 @@ const Tracks = ({match}) => {
                         )}
                         {( tracks && tracks.length !== 0) ?
                             tracks.map(item => (
+                                item?.publish === true &&
                                 <TrackItem
                                     key={item._id}
                                     id={item._id}
@@ -62,6 +63,7 @@ const Tracks = ({match}) => {
                                     duration={item.duration}
                                     number={item.number}
                                     url={item.url}
+                                    show={false}
                                     albumId={match.params.id}
                                     onClick={() =>onTrackClick(item._id)}
                                 />

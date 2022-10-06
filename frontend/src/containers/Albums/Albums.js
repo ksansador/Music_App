@@ -46,12 +46,14 @@ const Albums = ({match}) => {
                         )}
                         { (albums && albums.length !== 0) ?
                             albums.map(item => (
+                                item?.publish === true &&
                                 <AlbumItem
                                     key={item._id}
                                     title={item.title}
                                     release={item.year}
                                     tracks={item.count}
                                     id={item._id}
+                                    show={false}
                                     image={item.image}
                                     artistId={match.params.id}
                                 />

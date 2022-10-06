@@ -5,9 +5,10 @@ import {Link} from "react-router-dom";
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteAlbum, fetchAlbums} from "../../store/actions/albumsActions";
+import {deleteAlbum, fetchAlbums, publishAlbum} from "../../store/actions/albumsActions";
+import PublishIcon from "@mui/icons-material/Publish";
 
-const AlbumItem = ({image, title, release, tracks, id, artistId}) => {
+const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
 
@@ -57,6 +58,19 @@ const AlbumItem = ({image, title, release, tracks, id, artistId}) => {
                             sx={{ color: 'rgba(148,148,148,0.54)' }}
                         >
                             <DeleteIcon />
+                        </IconButton>
+                    }
+                    {
+                        show  &&
+                        <IconButton
+                            component={Button}
+                            onClick={ async()=> {
+                                await dispatch(publishAlbum(id));
+                                await dispatch(fetchAlbums());
+                            }}
+                            sx={{ color: 'rgba(148,148,148,0.54)' }}
+                        >
+                            <PublishIcon />
                         </IconButton>
                     }
                 </div>

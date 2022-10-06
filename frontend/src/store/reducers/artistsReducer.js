@@ -5,7 +5,7 @@ import {
     FETCH_ARTIST_REQUEST, FETCH_ARTIST_SUCCESS,
     FETCH_ARTISTS_FAILURE,
     FETCH_ARTISTS_REQUEST,
-    FETCH_ARTISTS_SUCCESS
+    FETCH_ARTISTS_SUCCESS, PUBLISH_ARTIST_FAILURE, PUBLISH_ARTIST_REQUEST, PUBLISH_ARTIST_SUCCESS
 } from "../actions/artistsActions";
 
 const initialState = {
@@ -45,6 +45,13 @@ const artistsReducer = (state = initialState, actions ) => {
         case DELETE_ARTIST_SUCCESS:
             return {...state, createArtistLoading: false};
         case DELETE_ARTIST_FAILURE:
+            return {...state, createArtistError: actions.payload, createArtistLoading: false};
+
+        case PUBLISH_ARTIST_REQUEST:
+            return {...state, createArtistError: null, createArtistLoading: true};
+        case PUBLISH_ARTIST_SUCCESS:
+            return {...state, createArtistLoading: false};
+        case PUBLISH_ARTIST_FAILURE:
             return {...state, createArtistError: actions.payload, createArtistLoading: false};
 
         default:

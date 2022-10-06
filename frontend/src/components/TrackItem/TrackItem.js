@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react';
 import {Button, Paper, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -7,15 +6,15 @@ import NumbersIcon from '@mui/icons-material/Numbers';
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Modal from "../UI/Modal/Modal";
 import ReactPlayer from "react-player";
-import PlayCircleFilledTwoToneIcon from '@mui/icons-material/PlayCircleFilledTwoTone';
 import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {deleteTrack, fetchTracks} from "../../store/actions/tracksActions";
+import {deleteTrack, fetchTracks, publishTrack} from "../../store/actions/tracksActions";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PublishIcon from "@mui/icons-material/Publish";
 
-
-const TrackItem = ({id, number, title, duration, url, onClick, albumId}) => {
-    const [show, setShow] = useState(false);
+const TrackItem = ({id, number, title, duration, url, onClick, albumId, show}) => {
+    const [shown, setShown] = useState(false);
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
 
@@ -31,24 +30,25 @@ const TrackItem = ({id, number, title, duration, url, onClick, albumId}) => {
             progress: undefined,
         });
     }}>
-        <PlayCircleFilledTwoToneIcon fontSize={'large'}/>
+        <PlayArrowIcon fontSize={'large'}/>
     </IconButton>;
 
 
     const modalHandler = () => {
-        setShow(!show);
+        setShown(!shown);
     };
 
     if(!!url) {
-        player =<IconButton onClick={() => {
-            modalHandler();
-            onClick();
-        }}>
-            <Modal show={show} closed={modalHandler}>
-                <ReactPlayer url={url} />
-            </Modal>
-            <YouTubeIcon fontSize={'large'}/>
-        </IconButton>
+        player =
+                <IconButton onClick={() => {
+                    modalHandler();
+                    onClick();
+                }}>
+                    <Modal show={shown} closed={modalHandler}>
+                        <ReactPlayer url={url} />
+                    </Modal>
+                    <YouTubeIcon fontSize={'large'}/>
+                </IconButton>
     }
 
     return (
@@ -76,8 +76,9 @@ const TrackItem = ({id, number, title, duration, url, onClick, albumId}) => {
                     {duration}
                 </Typography>
 
-                {player &&
-                    (    user?.role === 'admin' &&
+                {player}
+                {
+                    user?.role === 'admin' &&
                     <IconButton
                         component={Button}
                         onClick={ async()=> {
@@ -87,8 +88,21 @@ const TrackItem = ({id, number, title, duration, url, onClick, albumId}) => {
                         sx={{ color: 'rgba(148,148,148,0.54)' }}
                     >
                         <DeleteIcon />
-                    </IconButton>)
+                    </IconButton>
+                }
 
+                {
+                    show  &&
+                    <IconButton
+                        component={Button}
+                        onClick={ async()=> {
+                            await dispatch(publishTrack(id));
+                            await dispatch(fetchTracks());
+                        }}
+                        sx={{ color: 'rgba(148,148,148,0.54)' }}
+                    >
+                        <PublishIcon />
+                    </IconButton>
                 }
 
             </div>

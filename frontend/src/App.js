@@ -9,6 +9,7 @@ import TrackHistory from "./containers/TrackHistory/TrackHistory";
 import NewArtist from "./containers/Artists/NewArtist/NewArtist";
 import NewAlbum from "./containers/Albums/NewAlbum/NewAlbum";
 import NewTrack from "./containers/Tracks/NewTrack/NewTrack";
+import PublishRequest from "./containers/PublishRequest/PublishRequest";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path={'/register'} component={Register}/>
           <Route path={'/login'} component={Login}/>
           <Route path={'/track_history'} component={TrackHistory}/>
+          <Route path={'/requests'} component={PublishRequest}/>
       </Switch>
     </Layout>
   );

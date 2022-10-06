@@ -7,7 +7,7 @@ import {
     FETCH_ALBUM_SUCCESS,
     FETCH_ALBUMS_FAILURE,
     FETCH_ALBUMS_REQUEST,
-    FETCH_ALBUMS_SUCCESS
+    FETCH_ALBUMS_SUCCESS, PUBLISH_ALBUM_FAILURE, PUBLISH_ALBUM_REQUEST, PUBLISH_ALBUM_SUCCESS
 } from "../actions/albumsActions";
 
 const initialState = {
@@ -49,6 +49,13 @@ const albumsReducer = (state = initialState, actions ) => {
         case DELETE_ALBUM_SUCCESS:
             return {...state, createAlbumLoading: false};
         case DELETE_ALBUM_FAILURE:
+            return {...state, createAlbumError: actions.payload, createAlbumLoading: false};
+
+        case PUBLISH_ALBUM_REQUEST:
+            return {...state, createAlbumLoading: true, createAlbumError: null};
+        case PUBLISH_ALBUM_SUCCESS:
+            return {...state, createAlbumLoading: false};
+        case PUBLISH_ALBUM_FAILURE:
             return {...state, createAlbumError: actions.payload, createAlbumLoading: false};
 
         default:

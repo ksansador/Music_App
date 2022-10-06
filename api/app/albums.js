@@ -102,6 +102,25 @@ router.post('/', upload.single('image'), async (req,res) => {
 
 });
 
+router.put('/:id/publish', auth, permit('admin'), async (req, res) => {
+    const albumId =  req.params.id;
+
+    try {
+        const album = await Album.findById(albumId);
+
+        if(!album) {
+            return res.status(404).send({errors: 'There are no album'});
+        }
+
+        await Album.findByIdAndUpdate(albumId, {publish: true});
+
+        return  res.send({message: 'Publish success'});
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
+
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     const albumId = req.params.id;
 

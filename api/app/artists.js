@@ -71,6 +71,24 @@ router.post('/', auth, upload.single('image'), async (req,res) => {
     }
 });
 
+router.put('/:id/publish', auth, permit('admin'), async (req, res) => {
+    const artistId =  req.params.id;
+
+    try {
+        const artist = await Artist.findById(artistId);
+
+        if(!artist) {
+            return res.status(404).send({errors: 'There are no artist'});
+        }
+
+        await Artist.findByIdAndUpdate(artistId, {publish: true});
+
+        return  res.send({message: 'Publish success'});
+    } catch (e) {
+        res.sendStatus(500);
+    }
+});
+
 router.delete('/:id', auth, permit('admin'), async (req, res) => {
     const artistId = req.params.id;
 

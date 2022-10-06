@@ -16,7 +16,11 @@ export const CREATE_ALBUM_FAILURE = 'CREATE_ALBUM_FAILURE';
 
 export const DELETE_ALBUM_REQUEST = 'DELETE_ALBUM_REQUEST';
 export const DELETE_ALBUM_SUCCESS = 'DELETE_ALBUM_SUCCESS';
-export const DELETE_ALBUM_FAILURE = 'DELETE_AALBUM_FAILURE';
+export const DELETE_ALBUM_FAILURE = 'DELETE_ALBUM_FAILURE';
+
+export const PUBLISH_ALBUM_REQUEST = 'PUBLISH_ALBUM_REQUEST';
+export const PUBLISH_ALBUM_SUCCESS = 'PUBLISH_ALBUM_SUCCESS';
+export const PUBLISH_ALBUM_FAILURE = 'PUBLISH_ALBUM_FAILURE';
 
 const fetchAlbumsRequest = () => ({type: FETCH_ALBUMS_REQUEST});
 const fetchAlbumsSuccess = albums => ({type: FETCH_ALBUMS_SUCCESS, payload: albums});
@@ -33,6 +37,10 @@ const createAlbumFailure = error => ({type: CREATE_ALBUM_FAILURE, payload: error
 const deleteAlbumRequest = () => ({type: DELETE_ALBUM_REQUEST});
 const deleteAlbumSuccess = () => ({type: DELETE_ALBUM_SUCCESS});
 const deleteAlbumFailure = error => ({type: DELETE_ALBUM_FAILURE, payload: error});
+
+const publishAlbumRequest = () => ({type: PUBLISH_ALBUM_REQUEST});
+const publishAlbumSuccess = () => ({type: PUBLISH_ALBUM_SUCCESS});
+const publishAlbumFailure = error => ({type: PUBLISH_ALBUM_FAILURE, payload: error});
 
 export const fetchAlbums = id => {
     return async dispatch => {
@@ -82,7 +90,7 @@ export const createAlbum = (albumData) => {
             await axiosApi.post('/albums', albumData);
             dispatch(createAlbumSuccess());
             dispatch(historyPush('/'));
-            toast.success('Artist added!', {
+            toast.success('Album send to request!', {
                 position: "top-right",
                 autoClose: 3500,
                 hideProgressBar: false,
@@ -120,6 +128,27 @@ export const deleteAlbum = id => {
             });
         } catch (e) {
             dispatch(deleteAlbumFailure(e));
+        }
+    };
+};
+
+export const publishAlbum = id => {
+    return  async dispatch => {
+        try {
+            dispatch(publishAlbumRequest());
+            await axiosApi.put(`/albums/${id}/publish`);
+            dispatch(publishAlbumSuccess());
+            toast.success('Album added!', {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }   catch (e) {
+            dispatch(publishAlbumFailure(e));
         }
     };
 };

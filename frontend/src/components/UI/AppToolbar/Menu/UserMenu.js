@@ -1,5 +1,5 @@
+import * as React from "react";
 import {useState} from "react";
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,8 +9,8 @@ import {logoutUser} from "../../../../store/actions/usersActions";
 
 const UserMenu = ({user}) => {
     const dispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,6 +41,17 @@ const UserMenu = ({user}) => {
           'aria-labelledby': 'basic-button',
         }}
       >
+          {user?.role === 'admin' &&
+              <MenuItem onClick={handleClose}>
+                  <Link to={'/requests'} style={{color: 'inherit',
+                      textDecoration: 'none',
+                      '&:hover': {
+                          color: 'inherit'
+                      }}}>
+                      Requests
+                  </Link>
+              </MenuItem>
+          }
         <MenuItem onClick={handleClose}>
             <Link to={'/track_history'} style={{color: 'inherit',
                 textDecoration: 'none',
@@ -77,6 +88,7 @@ const UserMenu = ({user}) => {
                 New track
             </Link>
         </MenuItem>
+
         <MenuItem onClick={() => dispatch(logoutUser())}>Logout</MenuItem>
       </Menu>
     </div>

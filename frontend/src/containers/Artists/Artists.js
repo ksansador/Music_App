@@ -33,9 +33,11 @@ const Artists = () => {
                 ? <Box sx={{textAlign: 'center'}}>Loading ...</Box>
                 : (artists && artists.length !== 0) ?
                     artists.map(artist => (
+                        artist?.publish === true &&
                         <ArtistItem
                             key={artist._id}
                             id={artist._id}
+                            show={false}
                             title={artist.title}
                             image={artist.image}
                         />

@@ -18,6 +18,10 @@ export const DELETE_ARTIST_REQUEST = 'DELETE_ARTIST_REQUEST';
 export const DELETE_ARTIST_SUCCESS = 'DELETE_ARTIST_SUCCESS';
 export const DELETE_ARTIST_FAILURE = 'DELETE_ARTIST_FAILURE';
 
+export const PUBLISH_ARTIST_REQUEST = 'PUBLISH_ARTIST_REQUEST';
+export const PUBLISH_ARTIST_SUCCESS = 'PUBLISH_ARTIST_SUCCESS';
+export const PUBLISH_ARTIST_FAILURE = 'PUBLISH_ARTIST_FAILURE';
+
 const fetchArtistsRequest = () => ({type: FETCH_ARTISTS_REQUEST});
 const fetchArtistsSuccess = artists => ({type: FETCH_ARTISTS_SUCCESS, payload: artists});
 const fetchArtistsFailure = errors => ({type: FETCH_ARTISTS_FAILURE, payload: errors});
@@ -33,6 +37,10 @@ const createArtistFailure = error => ({type: CREATE_ARTIST_FAILURE, payload: err
 const deleteArtistRequest = () => ({type: DELETE_ARTIST_REQUEST});
 const deleteArtistSuccess = () => ({type: DELETE_ARTIST_SUCCESS});
 const deleteArtistFailure = (error) => ({type: DELETE_ARTIST_FAILURE, payload: error});
+
+const publishArtistRequest = () => ({type: PUBLISH_ARTIST_REQUEST});
+const publishArtistSuccess = () => ({type: PUBLISH_ARTIST_SUCCESS});
+const publishArtistFailure = (error) => ({type: PUBLISH_ARTIST_FAILURE, payload: error});
 
 export const fetchArtists = () => {
     return async (dispatch, getState) => {
@@ -91,7 +99,7 @@ export const createArtist = (artistData) => {
             await axiosApi.post('/artists', artistData);
             dispatch(createArtistSuccess());
             dispatch(historyPush('/'));
-            toast.success('Artist added!', {
+            toast.success('Artist send to request!', {
                 position: "top-right",
                 autoClose: 3500,
                 hideProgressBar: false,
@@ -129,6 +137,27 @@ export const deleteArtist = id => {
             });
         } catch (e) {
             dispatch(deleteArtistFailure(e));
+        }
+    };
+};
+
+export const publishArtist = id => {
+    return  async dispatch => {
+        try {
+            dispatch(publishArtistRequest());
+            await axiosApi.put(`/artists/${id}/publish`);
+            dispatch(publishArtistSuccess());
+            toast.success('Artist added!', {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }   catch (e) {
+            dispatch(publishArtistFailure(e));
         }
     };
 };
