@@ -42,16 +42,13 @@ const publishArtistRequest = () => ({type: PUBLISH_ARTIST_REQUEST});
 const publishArtistSuccess = () => ({type: PUBLISH_ARTIST_SUCCESS});
 const publishArtistFailure = (error) => ({type: PUBLISH_ARTIST_FAILURE, payload: error});
 
-export const fetchArtists = () => {
-    return async (dispatch, getState) => {
+export const fetchArtists = (query) => {
+    return async (dispatch) => {
         try{
-            const headers = {
-                'Authorization': getState().users.user && getState().users.user.token,
-            };
 
             dispatch(fetchArtistsRequest());
 
-            const response = await axiosApi('/artists', {headers});
+            const response = await axiosApi('/artists' + query);
 
             if(response) {
                 dispatch(fetchArtistsSuccess(response.data));

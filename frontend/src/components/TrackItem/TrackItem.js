@@ -9,11 +9,11 @@ import ReactPlayer from "react-player";
 import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {deleteTrack, fetchTracks, publishTrack} from "../../store/actions/tracksActions";
+import { fetchTracks, publishTrack} from "../../store/actions/tracksActions";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PublishIcon from "@mui/icons-material/Publish";
 
-const TrackItem = ({id, number, title, duration, url, onClick, albumId, show}) => {
+const TrackItem = ({id, number, title, duration, url, onClick, show, onDelete}) => {
     const [shown, setShown] = useState(false);
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
@@ -79,10 +79,7 @@ const TrackItem = ({id, number, title, duration, url, onClick, albumId, show}) =
                     user?.role === 'admin' &&
                     <IconButton
                         component={Button}
-                        onClick={ async()=> {
-                            await dispatch(deleteTrack(id));
-                            await dispatch(fetchTracks(albumId));
-                        }}
+                        onClick={onDelete}
                         sx={{ color: 'rgba(148,148,148,0.54)' }}
                     >
                         <DeleteIcon />
@@ -95,7 +92,7 @@ const TrackItem = ({id, number, title, duration, url, onClick, albumId, show}) =
                         component={Button}
                         onClick={ async()=> {
                             await dispatch(publishTrack(id));
-                            await dispatch(fetchTracks());
+                            await dispatch(fetchTracks(''));
                         }}
                         sx={{ color: 'rgba(148,148,148,0.54)' }}
                     >

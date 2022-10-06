@@ -5,7 +5,7 @@ import AlbumItem from "../../components/AlbumItem/AlbumItem";
 import Title from "../../components/UI/Title/Title";
 import {Link, Redirect} from "react-router-dom";
 import {fetchArtist} from "../../store/actions/artistsActions";
-import {fetchAlbums} from "../../store/actions/albumsActions";
+import {deleteAlbum, fetchAlbums} from "../../store/actions/albumsActions";
 
 const Albums = ({match}) => {
     const dispatch = useDispatch();
@@ -16,12 +16,17 @@ const Albums = ({match}) => {
 
     useEffect( () => {
         dispatch(fetchArtist(match.params.id));
-        dispatch(fetchAlbums(match.params.id));
+        dispatch(fetchAlbums('?artist=' + match.params.id));
     }, [dispatch, match.params.id]);
 
     if (!user) {
         return <Redirect to="/login"/>
     }
+
+    const onDelete = async(id)=> {
+        await dispatch(deleteAlbum(id));
+        await dispatch(fetchAlbums('?artist=' +match.params.id));
+    };
 
     return (
         <div style={{
@@ -55,7 +60,7 @@ const Albums = ({match}) => {
                                     id={item._id}
                                     show={false}
                                     image={item.image}
-                                    artistId={match.params.id}
+                                    onDelete={() => onDelete(item._id)}
                                 />
                         )) :
                             <Box sx={{textAlign: 'center'}}>There are no albums ...</Box>

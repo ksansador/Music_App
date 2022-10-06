@@ -6,24 +6,31 @@ const permit = require("../middleware/permit");
 const router = express.Router();
 
 router.get('/', async( req, res) => {
+    const query = {};
+    const sort = {};
+    query.user = req.query.user;
 
     if(req.query.album) {
-        const tracks = await Track
-            .find({album: req.query.album})
-            .sort({number: 1})
-            .populate('album', 'title');
+        query.album = req.query.album;
+        sort.number = 1;
+    }
 
-       return res.send(tracks);
-    } else if ( req.query.artist) {
-        const albums  = await Album.find({artist: req.query.artist}, "_id title");
+    if ( req.query.artist) {
+        query.artist = req.query.artist;
+        sort.number = 1;
+        const albums  = await Album.find(query, "_id title");
         const tracks = await Track.find({album: {$in: albums}}).populate('album', 'title');
 
        return  res.send(tracks);
     }
 
+    if(req.query.user) {
+        query.user = req.query.user;
+    }
+
     try {
         const tracks  =  await Track
-            .find()
+            .find(query)
             .populate('album', 'title artist year');
 
         res.send(tracks);
@@ -34,12 +41,14 @@ router.get('/', async( req, res) => {
 
 router.post('/',  async (req, res) => {
    const { title, album, duration, number, url } = req.body;
+   const user = req.user;
 
    const trackData = {
        title,
        album ,
        duration,
        number,
+       user: user._id,
        url: url || null,
    };
 

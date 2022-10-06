@@ -13,7 +13,7 @@ const NewAlbum = () => {
     const artists = useSelector(state => state.artists.artists);
 
     useEffect(() => {
-        dispatch(fetchArtists());
+        dispatch(fetchArtists(''));
     }, [dispatch]);
 
     const [state, setState] = useState({

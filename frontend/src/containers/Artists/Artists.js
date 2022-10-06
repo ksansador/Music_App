@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Box, Button, Typography} from "@mui/material";
 import ArtistItem from "../../components/ArtistItem/ArtistItem";
 import {Link, Redirect} from "react-router-dom";
-import {fetchArtists} from "../../store/actions/artistsActions";
+import {deleteArtist, fetchArtists} from "../../store/actions/artistsActions";
 const Artists = () => {
     const dispatch = useDispatch();
     const loading = useSelector( state => state.artists.artistLoading);
@@ -12,12 +12,17 @@ const Artists = () => {
 
 
     useEffect(() => {
-        dispatch(fetchArtists());
+        dispatch(fetchArtists(''));
     }, [dispatch]);
 
     if (!user) {
         return <Redirect to="/login"/>
     }
+
+    const onDelete = async(id) => {
+        await dispatch(deleteArtist(id));
+        await dispatch(fetchArtists(''));
+    };
 
     return (
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
@@ -39,6 +44,7 @@ const Artists = () => {
                             id={artist._id}
                             show={false}
                             title={artist.title}
+                            onDelete={() => onDelete(artist._id)}
                             image={artist.image}
                         />
             )) :

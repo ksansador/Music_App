@@ -5,12 +5,12 @@ import {Avatar, Button, Paper, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteArtist, fetchArtists, publishArtist} from "../../store/actions/artistsActions";
+import { fetchArtists, publishArtist} from "../../store/actions/artistsActions";
 import PublishIcon from '@mui/icons-material/Publish';
 import imageNotAvailable from "../../assets/no-photo.png";
 import {apiUrl} from "../../config";
 
-const  ArtistItem = ({image, title, id, show}) => {
+const  ArtistItem = ({image, title, id, show, onDelete}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
 
@@ -52,10 +52,7 @@ const  ArtistItem = ({image, title, id, show}) => {
                         user?.role === 'admin' &&
                         <IconButton
                             component={Button}
-                            onClick={ async()=> {
-                                await dispatch(deleteArtist(id));
-                                await dispatch(fetchArtists());
-                            }}
+                            onClick={onDelete}
                             sx={{ color: 'rgba(148,148,148,0.54)' }}
                         >
                             <DeleteIcon />
@@ -67,7 +64,7 @@ const  ArtistItem = ({image, title, id, show}) => {
                             component={Button}
                             onClick={ async()=> {
                                 await dispatch(publishArtist(id));
-                                await dispatch(fetchArtists());
+                                await dispatch(fetchArtists(''));
                             }}
                             sx={{ color: 'rgba(148,148,148,0.54)' }}
                         >

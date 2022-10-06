@@ -7,6 +7,11 @@ const AlbumSchema = new Schema({
         type: String,
         required: true,
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     artist: {
         type: Schema.Types.ObjectId,
         ref: 'ArtistItem',
@@ -21,7 +26,8 @@ const AlbumSchema = new Schema({
     publish: {
         type: Boolean,
         default: false,
-    }
+    },
+
 });
 
 AlbumSchema.plugin(idValidator, { message : 'Bad ID value for {PATH}' });

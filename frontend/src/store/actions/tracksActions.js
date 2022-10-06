@@ -34,17 +34,11 @@ const publishTrackRequest = () => ({type: PUBLISH_TRACK_REQUEST});
 const publishTrackSuccess = () => ({type: PUBLISH_TRACK_SUCCESS});
 const publishTrackFailure = error => ({type: PUBLISH_TRACK_FAILURE, payload: error});
 
-export const fetchTracks = id => {
+export const fetchTracks = query => {
     return async dispatch => {
         try {
             dispatch(fetchTracksRequest());
-            let response;
-            if(!!id){
-                response = await axiosApi(`/tracks?album=${id}`);
-            } else {
-                response = await axiosApi('/tracks');
-            }
-
+            const response = await axiosApi('/tracks' + query);
 
             if (response.data) {
                 dispatch(fetchTracksSuccess(response.data));
@@ -64,7 +58,7 @@ export const createTrack = (trackData) => {
             await axiosApi.post('/tracks', trackData);
             dispatch(createTrackSuccess());
             dispatch(historyPush('/'));
-            toast.success('Track added!', {
+            toast.success('Track send to request!', {
                 position: "top-right",
                 autoClose: 3500,
                 hideProgressBar: false,
@@ -112,7 +106,7 @@ export const publishTrack = id => {
             dispatch(publishTrackRequest());
             await axiosApi.put(`/tracks/${id}/publish`);
             dispatch(publishTrackSuccess());
-            toast.success('Track send to request!', {
+            toast.success('Track added!', {
                 position: "top-right",
                 autoClose: 3500,
                 hideProgressBar: false,

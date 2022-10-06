@@ -22,39 +22,34 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', async (req, res) => {
+   const query = {};
+   let sort = {year: +1}
+
     if(req.query.artist) {
-        const filter = {artist: req.query.artist}
-        const sort = { year: +1};
-
-        try {
-
-            const albums = await Album
-                .find(filter)
-                .sort(sort)
-                .populate('artist', 'title');
-
-            const result = await Promise.all(albums.map (async album => {
-                const tracks = await Track.find({album: album._id });
-
-                return {...album['_doc'], count: tracks.length};
-            }));
-
-          return  res.send(result);
-
-        } catch (e) {
-            res.sendStatus(500);
-        }
+        query.artist =  req.query.artist
     }
 
-    try{
-        const albums = await Album
-            .find()
-            .populate('artist', 'title');
+    if(req.query.user) {
+        query.user = req.query.user;
+    }
 
-        res.send(albums);
-    }  catch (e) {
+    try {
+        const albums = await Album
+            .find(query)
+            .sort(sort);
+
+        const result = await Promise.all(albums.map (async album => {
+            const tracks = await Track.find({album: album._id });
+
+            return {...album['_doc'], count: tracks.length};
+        }));
+
+      return  res.send(result);
+
+    } catch (e) {
         res.sendStatus(500);
     }
+
 });
 
 router.get('/:id', async (req, res) => {
@@ -75,11 +70,13 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', upload.single('image'), async (req,res) => {
    const { title, artist, year } = req.body;
+    const user = req.user;
 
     const albumData = {
         title,
         artist,
         year,
+        user: user._id,
         image: null
     };
 

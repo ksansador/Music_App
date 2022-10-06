@@ -21,8 +21,15 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 router.get('/', auth, async (req, res) => {
+    const query = {};
+
+
+    if(req.query.user) {
+        query.user = req.query.user;
+    }
+
     try{
-        const artists = await Artist.find();
+        const artists = await Artist.find(query);
 
         res.send(artists);
     }  catch (e) {
@@ -46,9 +53,11 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', auth, upload.single('image'), async (req,res) => {
     const { title, description } = req.body;
+    const user = req.user;
 
     const artistData = {
         title,
+        user: user._id,
         description: description || null,
         image: null,
     };

@@ -5,7 +5,7 @@ import TrackItem from "../../components/TrackItem/TrackItem";
 import Title from "../../components/UI/Title/Title";
 import {Link, Redirect} from "react-router-dom";
 import {fetchAlbum} from "../../store/actions/albumsActions";
-import {fetchTracks} from "../../store/actions/tracksActions";
+import {deleteTrack, fetchTracks} from "../../store/actions/tracksActions";
 import {addTrackToHistory} from "../../store/actions/trackHistoryActions";
 
 const Tracks = ({match}) => {
@@ -16,7 +16,7 @@ const Tracks = ({match}) => {
      const user = useSelector(state => state.users.user);
 
      useEffect(() => {
-         dispatch(fetchTracks(match.params.id));
+         dispatch(fetchTracks('?album=' + match.params.id));
          dispatch(fetchAlbum(match.params.id))
      }, [dispatch, match.params.id]);
 
@@ -27,6 +27,11 @@ const Tracks = ({match}) => {
      const onTrackClick = async (id) => {
          await dispatch(addTrackToHistory(id));
      };
+
+    const onDelete = async (id) => {
+        await dispatch(deleteTrack(id));
+        await dispatch(fetchTracks('?album=' + match.params.id));
+    };
 
     return (
         <div style={{
@@ -64,6 +69,7 @@ const Tracks = ({match}) => {
                                     number={item.number}
                                     url={item.url}
                                     show={false}
+                                    onDelete={() =>onDelete(item._id)}
                                     albumId={match.params.id}
                                     onClick={() =>onTrackClick(item._id)}
                                 />

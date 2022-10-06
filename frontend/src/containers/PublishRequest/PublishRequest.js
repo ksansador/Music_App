@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchArtists} from "../../store/actions/artistsActions";
-import {fetchAlbums} from "../../store/actions/albumsActions";
-import {fetchTracks} from "../../store/actions/tracksActions";
+import {deleteArtist, fetchArtists} from "../../store/actions/artistsActions";
+import {deleteAlbum, fetchAlbums} from "../../store/actions/albumsActions";
+import {deleteTrack, fetchTracks} from "../../store/actions/tracksActions";
 import {Box, Typography} from "@mui/material";
 import {Redirect} from "react-router-dom";
 import ArtistItem from "../../components/ArtistItem/ArtistItem";
@@ -22,9 +22,9 @@ const PublishRequest = () => {
     const tracks = useSelector(state => state.tracks.tracks);
 
     useEffect(() => {
-        dispatch(fetchArtists());
-        dispatch(fetchAlbums());
-        dispatch(fetchTracks());
+        dispatch(fetchArtists('?user=' + user._id));
+        dispatch(fetchAlbums('?user=' + user._id));
+        dispatch(fetchTracks('?user=' + user._id));
     }, [dispatch]);
 
     if (!user) {
@@ -35,6 +35,20 @@ const PublishRequest = () => {
         await dispatch(addTrackToHistory(id));
     };
 
+    const onDelete = async (id) => {
+        await dispatch(deleteTrack(id));
+        await dispatch(fetchTracks('?user=' + user._id));
+    };
+
+    const onAlbumDelete = async(id)=> {
+        await dispatch(deleteAlbum(id));
+        await dispatch(fetchAlbums('?user=' +user._id));
+    };
+
+    const onArtistDelete = async(id)=> {
+        await dispatch(deleteArtist(id));
+        await dispatch(fetchArtists('?user=' + user._id));
+    };
 
     return (
         <div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column'}}>
@@ -58,6 +72,7 @@ const PublishRequest = () => {
                                 key={artist._id}
                                 id={artist._id}
                                 show={true}
+                                onDelete={() => onArtistDelete(artist._id)}
                                 title={artist.title}
                                 image={artist.image}
                             />
@@ -86,7 +101,7 @@ const PublishRequest = () => {
                                 id={item._id}
                                 show={true}
                                 image={item.image}
-                                // artistId={match.params.id}
+                                onDelete={() => onAlbumDelete(item._id)}
                             />
                         )) )
                 }
@@ -112,7 +127,7 @@ const PublishRequest = () => {
                                 number={item.number}
                                 url={item.url}
                                 show={true}
-                                // albumId={match.params.id}
+                                onDelete={()=>onDelete(item._id)}
                                 onClick={() =>onTrackClick(item._id)}
                             />
                         )) )

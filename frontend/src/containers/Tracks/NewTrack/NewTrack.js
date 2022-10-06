@@ -23,11 +23,11 @@ const NewTrack = () => {
     });
 
     useEffect(() => {
-        dispatch(fetchArtists());
+        dispatch(fetchArtists(''));
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(fetchAlbums(state.artist));
+        dispatch(fetchAlbums('?artist=' + state.artist));
     }, [dispatch, state.artist]);
 
     const inputChangeHandler = e => {

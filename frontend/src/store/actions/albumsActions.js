@@ -42,19 +42,14 @@ const publishAlbumRequest = () => ({type: PUBLISH_ALBUM_REQUEST});
 const publishAlbumSuccess = () => ({type: PUBLISH_ALBUM_SUCCESS});
 const publishAlbumFailure = error => ({type: PUBLISH_ALBUM_FAILURE, payload: error});
 
-export const fetchAlbums = id => {
+export const fetchAlbums = query => {
     return async dispatch => {
         try {
             dispatch(fetchAlbumsRequest());
-    let response;
-            if(!!id) {
-                 response = await axiosApi.get(`/albums?artist=${id}`);
-            } else {
-                 response = await axiosApi.get('/albums')
-            }
 
+            const  response = await axiosApi.get('/albums' + query);
 
-            if(response) {
+            if(response.data) {
                 dispatch(fetchAlbumsSuccess(response.data));
             } else  {
                 dispatch(fetchAlbumsSuccess([]));

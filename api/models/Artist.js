@@ -8,6 +8,11 @@ const ArtistSchema = new Schema({
         required: true,
         unique: true,
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     description: String,
     image: String,
     publish: {

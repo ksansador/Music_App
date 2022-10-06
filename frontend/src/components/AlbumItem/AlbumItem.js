@@ -5,12 +5,12 @@ import {Link} from "react-router-dom";
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteAlbum, fetchAlbums, publishAlbum} from "../../store/actions/albumsActions";
+import { fetchAlbums, publishAlbum} from "../../store/actions/albumsActions";
 import PublishIcon from "@mui/icons-material/Publish";
 import imageNotAvailable from '../../assets/no-photo.png';
 import {apiUrl} from "../../config";
 
-const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
+const AlbumItem = ({image, title, release, tracks, id, onDelete, show}) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.users.user);
 
@@ -58,10 +58,7 @@ const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
                         user?.role === 'admin' &&
                         <IconButton
                             component={Button}
-                            onClick={ async()=> {
-                                await dispatch(deleteAlbum(id));
-                                await dispatch(fetchAlbums(artistId));
-                            }}
+                            onClick={onDelete}
                             sx={{ color: 'rgba(148,148,148,0.54)' }}
                         >
                             <DeleteIcon />
@@ -73,7 +70,7 @@ const AlbumItem = ({image, title, release, tracks, id, artistId, show}) => {
                             component={Button}
                             onClick={ async()=> {
                                 await dispatch(publishAlbum(id));
-                                await dispatch(fetchAlbums());
+                                await dispatch(fetchAlbums(''));
                             }}
                             sx={{ color: 'rgba(148,148,148,0.54)' }}
                         >
