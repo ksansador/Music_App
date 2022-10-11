@@ -7,6 +7,7 @@ import ButtonWithProgress from "../../components/UI/ButtonWithProgress/ButtonWit
 import {LockOutlined} from "@mui/icons-material";
 import {makeStyles} from "tss-react/mui";
 import {clearRegisterErrors, registerUser} from "../../store/actions/usersActions";
+import FileInput from "../../components/UI/Form/FileInput/FileInput";
 
 const useStyles = makeStyles()(theme => ({
     paper: {
@@ -34,14 +35,16 @@ const Register = () => {
     const loading = useSelector(state => state.users.registerLoading);
 
     const [user, setUser] = useState({
-        username: '',
+        email: '',
         password: '',
+        displayName: '',
+        avatarImage: '',
     });
 
     useEffect(() => {
         return () => {
             dispatch(clearRegisterErrors());
-        }
+        };
     }, [dispatch]);
 
     const inputChangeHandler = e => {
@@ -64,6 +67,13 @@ const Register = () => {
         }
     };
 
+    const fileChangeHandler = e => {
+        const name = e.target.name;
+        const file = e.target.files[0];
+
+        setUser(prevState => ({...prevState, [name]: file}));
+    };
+
     return (
         <Container maxWidth="xs">
             <div className={classes.paper}>
@@ -82,11 +92,20 @@ const Register = () => {
                 >
                     <FormElement
                         required={true}
-                        label="Username"
-                        name="username"
-                        value={user.username}
+                        label="Email"
+                        name="email"
+                        value={user.email}
                         onChange={inputChangeHandler}
-                        error={getFieldError('username')}
+                        error={getFieldError('email')}
+                    />
+
+                    <FormElement
+                        required={true}
+                        label="Display Name"
+                        name="displayName"
+                        value={user.displayName}
+                        onChange={inputChangeHandler}
+                        error={getFieldError('displayName')}
                     />
 
                     <FormElement
@@ -98,6 +117,14 @@ const Register = () => {
                         onChange={inputChangeHandler}
                         error={getFieldError('password')}
                     />
+
+                    <Grid item>
+                        <FileInput
+                            label="Avatar"
+                            name="avatarImage"
+                            onChange={fileChangeHandler}
+                        />
+                    </Grid>
 
                     <Grid item xs={12}>
                         <ButtonWithProgress

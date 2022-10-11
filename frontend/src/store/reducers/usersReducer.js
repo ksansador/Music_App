@@ -18,7 +18,7 @@ const initialState = {
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
       case REGISTER_USER_REQUEST:
-          return {...state, registerLoading: true};
+          return {...state, registerLoading: true, registerError: null};
       case REGISTER_USER_SUCCESS:
           return {...state, registerLoading: false};
       case REGISTER_USER_FAILURE:
@@ -27,13 +27,13 @@ const usersReducer = (state = initialState, action) => {
           return {...state, registerError: null};
 
       case LOGIN_USER_REQUEST:
-          return {...state, loginLoading: true};
+          return {...state, loginLoading: true, loginError: null };
       case LOGIN_USER_SUCCESS:
           return {...state, loginLoading: false, user: action.payload};
       case LOGIN_USER_FAILURE:
           return {...state, loginLoading: false, loginError: action.payload};
       case CLEAR_LOGIN_ERRORS:
-          return {...state, loginError: null};
+          return {...state, loginError: null, loginLoading: false};
 
       case LOGOUT_USER:
           return {...state, user: null};

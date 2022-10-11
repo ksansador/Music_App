@@ -6,12 +6,20 @@ import MenuItem from '@mui/material/MenuItem';
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logoutUser} from "../../../../store/actions/usersActions";
+import {Avatar} from "@mui/material";
+import imageNotAvailable from "../../../../assets/no-photo.png";
+import {apiUrl} from "../../../../config";
 
 const UserMenu = ({user}) => {
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    let avatar = imageNotAvailable;
+
+    if (user.avatarImage) {
+        avatar = apiUrl + '/' + user.avatarImage;
+    }
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -22,16 +30,24 @@ const UserMenu = ({user}) => {
 
   return (
     <div>
-      <Button
-        id="basic-button"
-        color="inherit"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        Hello, {user.username}!
-      </Button>
+        <div style={{ display: 'flex'}}>
+            <Avatar
+                src={`${avatar}?w=248&fit=crop&auto=format`}
+                alt={user.email}
+                // sx={{ width: 90,height: 90}}
+            />
+            <Button
+                id="basic-button"
+                color="inherit"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                Hello, {user.displayName}!
+            </Button>
+        </div>
+
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

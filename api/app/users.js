@@ -1,12 +1,38 @@
 const express = require('express');
 const User = require('../models/User');
+const multer = require("multer");
+const config = require("../config");
+const {nanoid} = require("nanoid");
+const path = require("path");
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, config.uploadPath);
+    },
+    filename: (req, file, cb) => {
+        cb(null, nanoid() + path.extname(file.originalname));
+    },
+});
+
+const upload = multer({storage});
+
+router.post('/', upload.single('image'), async (req, res) => {
     try {
-        const {username, password} = req.body;
-        const userData = {username, password};
+        const {email, password, displayName, avatarImage} = req.body;
+
+        const userData = {
+            email,
+            password,
+            displayName,
+            avatarImage: avatarImage || null,
+        };
+
+        if (req.file) {
+            userData.avatarImage = 'uploads/' + req.file.filename;
+        }
+
         const user = new User(userData);
 
         user.generateToken();
@@ -19,7 +45,7 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/sessions', async (req, res) => {
-    const user = await User.findOne({username: req.body.username});
+    const user = await User.findOne({email: req.body.email});
 
     if (!user) {
         return res.status(401).send({message: 'Credentials are wrong!'});

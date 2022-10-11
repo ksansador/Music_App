@@ -35,10 +35,17 @@ store.subscribe(() => {
 axiosApi.interceptors.request.use(config => {
     try {
         config.headers['Authorization'] = store.getState().users.user.token;
-    } catch (e) {
+    } catch (e) {}
 
-    }
     return config;
+});
+
+axiosApi.interceptors.response.use(res => res, e => {
+    if (!e.response.data) {
+        e.response = { data: {global: 'No internet!'}};
+    }
+
+    throw e;
 });
 
 export default store;

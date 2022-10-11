@@ -72,7 +72,7 @@ router.post('/', auth, upload.single('image'), async (req,res) => {
 
         res.send(artist);
     } catch (e) {
-        res.status(400).send({errors: e.errors});
+      return  res.status(400).send({errors: e.errors});
     }
 });
 

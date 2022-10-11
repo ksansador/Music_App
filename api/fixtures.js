@@ -17,15 +17,19 @@ const run = async () => {
     }
 
    const [adminUser, rootUser] = await User.create({
-        username: 'admin',
+        email: 'admin@gmail.com',
         password: 'admin',
         token: nanoid(),
         role: 'admin',
+       displayName: 'Admin',
+       avatarImage: 'fixtures/adminAvatar.jpg'
     }, {
-        username: 'user',
+        email: 'user@gmail.com',
         password: 'user',
         token: nanoid(),
         role: 'user',
+        displayName: 'User',
+       avatarImage: 'fixtures/userAvatar.png'
     });
 
     const [dateArtist, kingArtist] = await Artist.create({
