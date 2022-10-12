@@ -8,7 +8,6 @@ import {useDispatch} from "react-redux";
 import {logoutUser} from "../../../../store/actions/usersActions";
 import {Avatar} from "@mui/material";
 import imageNotAvailable from "../../../../assets/no-photo.png";
-import {apiUrl} from "../../../../config";
 
 const UserMenu = ({user}) => {
     const dispatch = useDispatch();

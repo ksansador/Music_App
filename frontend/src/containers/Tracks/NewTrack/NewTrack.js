@@ -6,12 +6,14 @@ import FormSelect from "../../../components/UI/Form/FormSelect/FormSelect";
 import {createTrack} from "../../../store/actions/tracksActions";
 import {fetchAlbums} from "../../../store/actions/albumsActions";
 import {fetchArtists} from "../../../store/actions/artistsActions";
+import {Redirect} from "react-router-dom";
 
 const NewTrack = () => {
     const dispatch = useDispatch();
     const error = useSelector( state => state.tracks.createTrackError);
     const albums = useSelector(state => state.albums.albums);
     const artists = useSelector(state => state.artists.artists);
+    const user = useSelector(state => state.users.user);
 
     const [state, setState] = useState({
         title: '',
@@ -29,6 +31,10 @@ const NewTrack = () => {
     useEffect(() => {
         dispatch(fetchAlbums('?artist=' + state.artist));
     }, [dispatch, state.artist]);
+
+    if (!user) {
+        return <Redirect to="/login"/>
+    }
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;

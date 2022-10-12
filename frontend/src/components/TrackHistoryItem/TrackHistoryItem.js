@@ -7,6 +7,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import {Paper, Typography} from "@mui/material";
+import dayjs from "dayjs";
 
 const  TrackHistoryItem = ({number, title, artist, datetime, duration}) => {
     const [open, setOpen] = useState(false);
@@ -49,7 +50,7 @@ const  TrackHistoryItem = ({number, title, artist, datetime, duration}) => {
                                 duration: {duration}
                             </Typography>
                             <Typography component={'p'} sx={{ fontSize: '16px'}}>
-                                datetime: {datetime}
+                                datetime: {dayjs(datetime).format('MMMM D, YYYY h:mm A')}
                             </Typography>
                         </div>
                     </div>

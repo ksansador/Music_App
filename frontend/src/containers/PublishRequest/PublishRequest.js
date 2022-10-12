@@ -32,7 +32,7 @@ const PublishRequest = () => {
             dispatch(fetchTracks(''));
         }
 
-    }, [dispatch]);
+    }, [dispatch, user]);
 
     if (!user) {
         return <Redirect to="/login"/>

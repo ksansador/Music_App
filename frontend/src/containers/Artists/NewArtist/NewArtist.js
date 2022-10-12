@@ -4,16 +4,22 @@ import {Button, Grid} from "@mui/material";
 import FormElement from "../../../components/UI/Form/FormElement/FormElement";
 import FileInput from "../../../components/UI/Form/FileInput/FileInput";
 import {createArtist} from "../../../store/actions/artistsActions";
+import {Redirect} from "react-router-dom";
 
 const NewArtist = () => {
     const dispatch = useDispatch();
     const error = useSelector( state => state.artists.createArtistError);
+    const user = useSelector(state => state.users.user);
 
     const [state, setState] = useState({
        title: '',
        description: '',
        image: '',
    });
+
+    if (!user) {
+        return <Redirect to="/login"/>
+    }
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;

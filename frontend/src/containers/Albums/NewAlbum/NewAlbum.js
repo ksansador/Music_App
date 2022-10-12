@@ -6,22 +6,28 @@ import FileInput from "../../../components/UI/Form/FileInput/FileInput";
 import {fetchArtists} from "../../../store/actions/artistsActions";
 import FormSelect from "../../../components/UI/Form/FormSelect/FormSelect";
 import {createAlbum} from "../../../store/actions/albumsActions";
+import {Redirect} from "react-router-dom";
 
 const NewAlbum = () => {
     const dispatch = useDispatch();
     const error = useSelector( state => state.albums.createAlbumError);
     const artists = useSelector(state => state.artists.artists);
-
-    useEffect(() => {
-        dispatch(fetchArtists(''));
-    }, [dispatch]);
-
+    const user = useSelector(state => state.users.user);
     const [state, setState] = useState({
         title: '',
         artist: '',
         year: '',
         image: '',
     });
+
+    useEffect(() => {
+        dispatch(fetchArtists(''));
+    }, [dispatch]);
+
+
+    if (!user) {
+        return <Redirect to="/login"/>
+    }
 
     const inputChangeHandler = e => {
         const {name, value} = e.target;
