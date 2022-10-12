@@ -30,7 +30,7 @@ router.post('/', upload.single('image'), async (req, res) => {
         };
 
         if (req.file) {
-            userData.avatarImage = 'uploads/' + req.file.filename;
+            userData.avatarImage = 'http://localhost:8000/uploads/' + req.file.filename;
         }
 
         const user = new User(userData);

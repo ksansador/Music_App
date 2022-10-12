@@ -18,7 +18,7 @@ const UserMenu = ({user}) => {
     let avatar = imageNotAvailable;
 
     if (user.avatarImage) {
-        avatar = apiUrl + '/' + user.avatarImage;
+        avatar =  user.avatarImage;
     }
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,7 +34,7 @@ const UserMenu = ({user}) => {
             <Avatar
                 src={`${avatar}?w=248&fit=crop&auto=format`}
                 alt={user.email}
-                // sx={{ width: 90,height: 90}}
+                sx={{ marginRight: '10px'}}
             />
             <Button
                 id="basic-button"

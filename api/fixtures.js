@@ -22,14 +22,14 @@ const run = async () => {
         token: nanoid(),
         role: 'admin',
        displayName: 'Admin',
-       avatarImage: 'fixtures/adminAvatar.jpg'
+       avatarImage: 'http://localhost:8000/fixtures/adminAvatar.jpg'
     }, {
         email: 'user@gmail.com',
         password: 'user',
         token: nanoid(),
         role: 'user',
         displayName: 'User',
-       avatarImage: 'fixtures/userAvatar.png'
+       avatarImage: 'http://localhost:8000/fixtures/userAvatar.png'
     });
 
     const [dateArtist, kingArtist] = await Artist.create({

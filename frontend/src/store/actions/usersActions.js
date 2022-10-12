@@ -83,6 +83,32 @@ export const loginUser = userData => {
     };
 };
 
+export const facebookLogin = data => {
+    return async dispatch => {
+        try {
+            dispatch(loginUserRequest());
+
+            const response = await axiosApi.post('users/facebookLogin', data);
+            dispatch(loginUserSuccess(response.data.user));
+            toast.success('You are login!', {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            dispatch(historyPush('/'));
+        } catch (e) {
+            if (e.response && e.response.data) {
+                dispatch(loginUserFailure(e.response.data));
+            } else {
+                dispatch(loginUserFailure({global: 'No internet'}));
+            }
+        }
+    }
+}
 export const logoutUser = () => {
     return async (dispatch, getState) => {
         try {
