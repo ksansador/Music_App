@@ -13,21 +13,24 @@ const Artists = () => {
 
 
     useEffect(() => {
-        dispatch(fetchArtists(''));
+        if(user) {
+            dispatch(fetchArtists(''));
+        }  else {
+            toast.warn('Need to login!', {
+                position: "top-right",
+                autoClose: 3500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
+        }
     }, [dispatch]);
 
     if (!user) {
-        toast.warn('Need to login!', {
-            position: "top-right",
-            autoClose: 3500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
         return <Redirect to="/login"/>
-
     }
 
 

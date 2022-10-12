@@ -43,14 +43,14 @@ export const registerUser = userData => {
                 draggable: true,
                 progress: undefined,
             });
-            dispatch(historyPush('/'));
+            dispatch(historyPush('/login'));
         } catch (e) {
             if (e.response && e.response.data) {
-                dispatch(registerUserFailure(e.response.data));
-            } else {
-                dispatch(registerUserFailure({global: 'No internet'}));
+               return  dispatch(registerUserFailure(e.response.data));
             }
-            throw e;
+               return  dispatch(registerUserFailure({global: 'No internet'}));
+
+            // throw e;
         }
     };
 };
@@ -81,11 +81,12 @@ export const loginUser = userData => {
 
         } catch (e) {
             if (e.response && e.response.data) {
-                dispatch(loginUserFailure(e.response.data));
-            } else {
-                dispatch(loginUserFailure({global: 'No internet'}));
+              return   dispatch(loginUserFailure(e.response.data));
             }
-            throw e;
+
+            return dispatch(loginUserFailure({global: 'No internet'}));
+
+            // throw e;
         }
     };
 };
@@ -114,11 +115,10 @@ export const facebookLogin = data => {
 
         } catch (e) {
             if (e.response && e.response.data) {
-                dispatch(loginUserFailure(e.response.data));
-            } else {
-               return  dispatch(loginUserFailure({global: 'No internet'}));
+               return dispatch(loginUserFailure(e.response.data));
             }
-            throw e;
+               return  dispatch(loginUserFailure({global: 'No internet'}));
+
         }
     }
 }
@@ -131,7 +131,7 @@ export const logoutUser = () => {
             await axiosApi.delete('/users/sessions', {headers});
 
             dispatch({type: LOGOUT_USER});
-            dispatch(historyPush('/'));
+            dispatch(historyPush('/login'));
             toast.warn('You are logout!', {
                 position: "top-right",
                 autoClose: 3500,

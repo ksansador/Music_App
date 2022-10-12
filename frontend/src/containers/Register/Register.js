@@ -129,6 +129,7 @@ const Register = () => {
                             label="Avatar"
                             name="avatarImage"
                             onChange={fileChangeHandler}
+                            error={getFieldError('avatarImage')}
                         />
                     </Grid>
 
