@@ -15,8 +15,10 @@ const TrackHistory = () => {
     const tracks = useSelector(state => state.trackHistory.tracks);
 
     useEffect(() => {
-        dispatch(fetchHistory());
-    }, [dispatch]);
+        if(user) {
+            dispatch(fetchHistory());
+        }
+    }, [dispatch, user]);
 
     if (!user) {
         toast.warn('You need to login!', {

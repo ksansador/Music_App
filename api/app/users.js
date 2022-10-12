@@ -72,7 +72,7 @@ router.post('/facebookLogin', async( req, res) => {
 
     try {
         const response = await axios.get(debugTokenUrl);
-        console.log(response);
+
         if(response.data.data.error) {
             return res.send.status(401).send({message: 'Facebook token incorrect!'});
         }

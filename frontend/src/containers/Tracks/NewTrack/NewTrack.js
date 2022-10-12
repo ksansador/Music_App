@@ -25,12 +25,16 @@ const NewTrack = () => {
     });
 
     useEffect(() => {
-        dispatch(fetchArtists(''));
-    }, [dispatch]);
+        if(user) {
+            dispatch(fetchArtists(''));
+        }
+    }, [dispatch, user]);
 
     useEffect(() => {
-        dispatch(fetchAlbums('?artist=' + state.artist));
-    }, [dispatch, state.artist]);
+        if(user) {
+            dispatch(fetchAlbums('?artist=' + state.artist));
+        }
+    }, [dispatch, state.artist, user]);
 
     if (!user) {
         return <Redirect to="/login"/>

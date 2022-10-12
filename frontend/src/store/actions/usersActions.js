@@ -48,7 +48,7 @@ export const registerUser = userData => {
             if (e.response && e.response.data) {
                return  dispatch(registerUserFailure(e.response.data));
             }
-               return  dispatch(registerUserFailure({global: 'No internet'}));
+            dispatch(registerUserFailure({global: 'No internet'}));
 
             // throw e;
         }
@@ -62,7 +62,6 @@ export const loginUser = userData => {
             dispatch(loginUserRequest());
 
             const response = await axiosApi.post('/users/sessions', userData);
-            console.log(response);
             if(response.data.user) {
                 dispatch(loginUserSuccess(response.data.user));
                 toast.success('You are login!', {
@@ -84,7 +83,7 @@ export const loginUser = userData => {
               return   dispatch(loginUserFailure(e.response.data));
             }
 
-            return dispatch(loginUserFailure({global: 'No internet'}));
+            dispatch(loginUserFailure({global: 'No internet'}));
 
             // throw e;
         }
@@ -117,7 +116,7 @@ export const facebookLogin = data => {
             if (e.response && e.response.data) {
                return dispatch(loginUserFailure(e.response.data));
             }
-               return  dispatch(loginUserFailure({global: 'No internet'}));
+                 dispatch(loginUserFailure({global: 'No internet'}));
 
         }
     }

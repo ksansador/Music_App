@@ -27,7 +27,7 @@ const Artists = () => {
             });
 
         }
-    }, [dispatch]);
+    }, [dispatch, user]);
 
     if (!user) {
         return <Redirect to="/login"/>

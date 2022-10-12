@@ -21,8 +21,10 @@ const NewAlbum = () => {
     });
 
     useEffect(() => {
-        dispatch(fetchArtists(''));
-    }, [dispatch]);
+        if(user) {
+            dispatch(fetchArtists(''));
+        }
+    }, [dispatch, user]);
 
 
     if (!user) {

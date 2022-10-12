@@ -15,9 +15,12 @@ const Albums = ({match}) => {
     const user = useSelector(state => state.users.user);
 
     useEffect( () => {
-        dispatch(fetchArtist(match.params.id));
-        dispatch(fetchAlbums('?artist=' + match.params.id));
-    }, [dispatch, match.params.id]);
+        if (user) {
+            dispatch(fetchArtist(match.params.id));
+            dispatch(fetchAlbums('?artist=' + match.params.id));
+        }
+
+    }, [dispatch, match.params.id, user]);
 
     if (!user) {
         return <Redirect to="/login"/>
