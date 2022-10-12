@@ -50,6 +50,7 @@ export const registerUser = userData => {
             } else {
                 dispatch(registerUserFailure({global: 'No internet'}));
             }
+            throw e;
         }
     };
 };
@@ -61,24 +62,30 @@ export const loginUser = userData => {
             dispatch(loginUserRequest());
 
             const response = await axiosApi.post('/users/sessions', userData);
+            console.log(response);
+            if(response.data.user) {
+                dispatch(loginUserSuccess(response.data.user));
+                toast.success('You are login!', {
+                    position: "top-right",
+                    autoClose: 3500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                dispatch(historyPush('/'));
+            } else {
+                dispatch(loginUserSuccess({}));
+            }
 
-            dispatch(loginUserSuccess(response.data.user));
-            toast.success('You are login!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            dispatch(historyPush('/'));
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(loginUserFailure(e.response.data));
             } else {
                 dispatch(loginUserFailure({global: 'No internet'}));
             }
+            throw e;
         }
     };
 };
@@ -89,23 +96,29 @@ export const facebookLogin = data => {
             dispatch(loginUserRequest());
 
             const response = await axiosApi.post('users/facebookLogin', data);
-            dispatch(loginUserSuccess(response.data.user));
-            toast.success('You are login!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-            dispatch(historyPush('/'));
+            if(response.data.user) {
+                dispatch(loginUserSuccess(response.data.user));
+                toast.success('You are login!', {
+                    position: "top-right",
+                    autoClose: 3500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                dispatch(historyPush('/'));
+            } else {
+                dispatch(loginUserSuccess({}));
+            }
+
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(loginUserFailure(e.response.data));
             } else {
-                dispatch(loginUserFailure({global: 'No internet'}));
+               return  dispatch(loginUserFailure({global: 'No internet'}));
             }
+            throw e;
         }
     }
 }

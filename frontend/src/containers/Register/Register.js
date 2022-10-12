@@ -53,10 +53,16 @@ const Register = () => {
         setUser(prev => ({...prev, [name]: value}));
     };
 
-    const submitFormHandler = e => {
+    const submitFormHandler = async e => {
         e.preventDefault();
 
-        dispatch(registerUser({...user}));
+        const formData = new FormData();
+
+        Object.keys(user).forEach(key => {
+            formData.append(key, user[key]);
+        });
+
+       await  dispatch(registerUser(formData));
     };
 
     const getFieldError = fieldName => {

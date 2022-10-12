@@ -115,9 +115,7 @@ const Login = () => {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <FacebookLogin/>
-                </Grid>
+                <FacebookLogin/>
 
                 <Grid container justifyContent="flex-end">
                     <Grid item>
