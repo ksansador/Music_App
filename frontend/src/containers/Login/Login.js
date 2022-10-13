@@ -61,6 +61,14 @@ const Login = () => {
         dispatch(loginUser({...user}));
     };
 
+    const getFieldError = fieldName => {
+        try {
+            return error.errors[fieldName].message;
+        } catch {
+            return undefined;
+        }
+    };
+
     return (
         <Container maxWidth="xs">
             <div className={classes.paper}>
@@ -89,6 +97,7 @@ const Login = () => {
                         name="email"
                         value={user.email}
                         onChange={inputChangeHandler}
+                        error={getFieldError('email')}
                     />
 
                     <FormElement
@@ -98,6 +107,7 @@ const Login = () => {
                         name="password"
                         value={user.password}
                         onChange={inputChangeHandler}
+                        error={getFieldError('password')}
                     />
 
                     <Grid item xs={12}>
@@ -113,9 +123,15 @@ const Login = () => {
                             Sign In
                         </ButtonWithProgress>
                     </Grid>
+
+                    <Grid item xs={12}>
+                        <FacebookLogin/>
+                    </Grid>
                 </Grid>
 
-                <FacebookLogin/>
+
+
+
 
                 <Grid container justifyContent="flex-end">
                     <Grid item>

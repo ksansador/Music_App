@@ -124,7 +124,7 @@ const Register = () => {
                         error={getFieldError('password')}
                     />
 
-                    <Grid item>
+                    <Grid item >
                         <FileInput
                             label="Avatar"
                             name="avatarImage"
