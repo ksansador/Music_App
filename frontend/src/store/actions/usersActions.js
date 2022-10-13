@@ -1,6 +1,6 @@
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
-import {toast} from "react-toastify";
+import {addNotification} from "./notifierActions";
 
 
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';
@@ -34,22 +34,13 @@ export const registerUser = userData => {
             const response =  await axiosApi.post('/users', userData);
 
             await  dispatch(registerUserSuccess(response.data));
-            toast.success('Register success!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Register Successful!', 'success'));
             dispatch(historyPush('/login'));
         } catch (e) {
             if (e.response && e.response.data) {
                return  dispatch(registerUserFailure(e.response.data));
             }
             dispatch(registerUserFailure({global: 'No internet'}));
-
             // throw e;
         }
     };
@@ -64,15 +55,7 @@ export const loginUser = userData => {
             const response = await axiosApi.post('/users/sessions', userData);
             if(response.data.user) {
                 dispatch(loginUserSuccess(response.data.user));
-                toast.success('You are login!', {
-                    position: "top-right",
-                    autoClose: 3500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
+                dispatch(addNotification('Login Successful!', 'success'));
                 dispatch(historyPush('/'));
             } else {
                 dispatch(loginUserSuccess({}));
@@ -84,7 +67,6 @@ export const loginUser = userData => {
             }
 
             dispatch(loginUserFailure({global: 'No internet'}));
-
             // throw e;
         }
     };
@@ -98,15 +80,7 @@ export const facebookLogin = data => {
             const response = await axiosApi.post('users/facebookLogin', data);
             if(response.data.user) {
                 dispatch(loginUserSuccess(response.data.user));
-                toast.success('You are login!', {
-                    position: "top-right",
-                    autoClose: 3500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
+                dispatch(addNotification('Login Successful!', 'success'));
                 dispatch(historyPush('/'));
             } else {
                 dispatch(loginUserSuccess({}));
@@ -130,15 +104,7 @@ export const googleLogin = data => {
             const response = await axiosApi.post('users/googleLogin', {token: data.tokenId});
             if(response.data.user) {
                 dispatch(loginUserSuccess(response.data.user));
-                toast.success('You are login!', {
-                    position: "top-right",
-                    autoClose: 3500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
+                dispatch(addNotification('Login Successful!', 'success'));
                 dispatch(historyPush('/'));
             } else {
                 dispatch(loginUserSuccess({}));
@@ -164,16 +130,8 @@ export const logoutUser = () => {
             await axiosApi.delete('/users/sessions', {headers});
 
             dispatch({type: LOGOUT_USER});
+            dispatch(addNotification('You are logout!', 'warn'));
             dispatch(historyPush('/login'));
-            toast.warn('You are logout!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
         } catch (e) {
 
         }

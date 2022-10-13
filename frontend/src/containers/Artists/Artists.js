@@ -4,7 +4,7 @@ import {Box, Button, Typography} from "@mui/material";
 import ArtistItem from "../../components/ArtistItem/ArtistItem";
 import {Link, Redirect} from "react-router-dom";
 import {deleteArtist, fetchArtists} from "../../store/actions/artistsActions";
-import {toast} from "react-toastify";
+import {addNotification} from "../../store/actions/notifierActions";
 const Artists = () => {
     const dispatch = useDispatch();
     const loading = useSelector( state => state.artists.artistLoading);
@@ -16,15 +16,8 @@ const Artists = () => {
         if(user) {
             dispatch(fetchArtists(''));
         }  else {
-            toast.warn('Need to login!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Need to login!', 'warn'));
+
 
         }
     }, [dispatch, user]);

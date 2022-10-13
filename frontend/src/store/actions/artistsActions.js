@@ -1,6 +1,6 @@
 import axiosApi from "../../axiosApi";
-import {toast} from "react-toastify";
 import {historyPush} from "./historyActions";
+import {addNotification} from "./notifierActions";
 
 export const FETCH_ARTISTS_REQUEST = 'FETCH_ARTISTS_REQUEST';
 export const FETCH_ARTISTS_SUCCESS = 'FETCH_ARTISTS_SUCCESS';
@@ -55,15 +55,7 @@ export const fetchArtists = (query) => {
             }
         } catch (e) {
             if (e.response.status === 401) {
-                toast.warn('You need login!', {
-                    position: "top-right",
-                    autoClose: 3500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
+                dispatch(addNotification('You need login!', 'warn'));
             }
 
             dispatch(fetchArtistsFailure(e));
@@ -96,15 +88,8 @@ export const createArtist = (artistData) => {
             await axiosApi.post('/artists', artistData);
             dispatch(createArtistSuccess());
             dispatch(historyPush('/'));
-            toast.success('Artist send to request!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Artist send to request!', 'success'));
+
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(createArtistFailure(e.response.data));
@@ -123,15 +108,8 @@ export const deleteArtist = id => {
             dispatch(deleteArtistRequest());
             await axiosApi.delete('/artists/' + id);
             dispatch(deleteArtistSuccess());
-            toast.success('Delete success!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Delete Successful!', 'success'));
+
         } catch (e) {
             dispatch(deleteArtistFailure(e));
         }
@@ -144,15 +122,8 @@ export const publishArtist = id => {
             dispatch(publishArtistRequest());
             await axiosApi.put(`/artists/${id}/publish`);
             dispatch(publishArtistSuccess());
-            toast.success('Artist added!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Artist added!', 'success'));
+
         }   catch (e) {
             dispatch(publishArtistFailure(e));
         }

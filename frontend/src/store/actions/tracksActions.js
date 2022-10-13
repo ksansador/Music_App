@@ -1,6 +1,6 @@
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
-import {toast} from "react-toastify";
+import {addNotification} from "./notifierActions";
 
 export const FETCH_TRACKS_REQUEST = 'FETCH_TRACKS_REQUEST';
 export const FETCH_TRACKS_SUCCESS = 'FETCH_TRACKS_SUCCESS';
@@ -58,15 +58,8 @@ export const createTrack = (trackData) => {
             await axiosApi.post('/tracks', trackData);
             dispatch(createTrackSuccess());
             dispatch(historyPush('/'));
-            toast.success('Track send to request!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Track send to request!', 'success'));
+
         } catch (e) {
             if (e.response && e.response.data) {
                 dispatch(createTrackFailure(e.response.data));
@@ -85,15 +78,8 @@ export const deleteTrack = id => {
             dispatch(deleteTrackRequest());
             await axiosApi.delete('/tracks/' + id);
             dispatch(deleteTrackSuccess());
-            toast.success('Delete success!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Delete Successful!', 'success'));
+
         } catch (e) {
             dispatch(deleteTrackFailure(e));
         }
@@ -106,15 +92,8 @@ export const publishTrack = id => {
             dispatch(publishTrackRequest());
             await axiosApi.put(`/tracks/${id}/publish`);
             dispatch(publishTrackSuccess());
-            toast.success('Track added!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Track added successful!', 'success'));
+
         }   catch (e) {
             dispatch(publishTrackFailure(e));
         }

@@ -1,6 +1,6 @@
 import axiosApi from "../../axiosApi";
 import {historyPush} from "./historyActions";
-import {toast} from "react-toastify";
+import {addNotification} from "./notifierActions";
 
 export const FETCH_ALBUMS_REQUEST = 'FETCH_ALBUMS_REQUEST';
 export const FETCH_ALBUMS_SUCCESS = 'FETCH_ALBUMS_SUCCESS';
@@ -85,15 +85,8 @@ export const createAlbum = (albumData) => {
             await axiosApi.post('/albums', albumData);
             dispatch(createAlbumSuccess());
             dispatch(historyPush('/'));
-            toast.success('Album send to request!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Album send to request!', 'success'));
+
         } catch (e) {
                 dispatch(createAlbumFailure(e.response.data));
 
@@ -107,15 +100,8 @@ export const deleteAlbum = id => {
             dispatch(deleteAlbumRequest());
             await axiosApi.delete('/albums/' + id);
             dispatch(deleteAlbumSuccess());
-            toast.success('Delete success!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Delete successful!', 'success'));
+
         } catch (e) {
             dispatch(deleteAlbumFailure(e));
         }
@@ -128,15 +114,8 @@ export const publishAlbum = id => {
             dispatch(publishAlbumRequest());
             await axiosApi.put(`/albums/${id}/publish`);
             dispatch(publishAlbumSuccess());
-            toast.success('Album added!', {
-                position: "top-right",
-                autoClose: 3500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            dispatch(addNotification('Album added!', 'success'));
+
         }   catch (e) {
             dispatch(publishAlbumFailure(e));
         }
