@@ -1,11 +1,13 @@
 const express = require('express');
-const User = require('../models/User');
 const multer = require('multer');
 const config = require("../config");
 const {nanoid} = require("nanoid");
+const { OAuth2Client } = require('google-auth-library')
+const User = require('../models/User');
 const path = require("path");
 const axios = require("axios");
 
+const client = new OAuth2Client(config.google.clientId);
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -101,6 +103,40 @@ router.post('/facebookLogin', async( req, res) => {
         return res.status(401).send({message: 'Facebook token incorrect Sorry!'});
     }
 });
+
+router.post('/googleLogin', async (req, res) => {
+    const { token }  = req.body
+    
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: config.google.clientId,
+        });
+
+        const { name, email, picture } = ticket.getPayload();
+
+        let user = await User.findOne({email});
+
+
+        if(!user) {
+            user = new User({
+                email,
+                password: nanoid(),
+                displayName: name,
+                avatarImage: picture,
+            });
+        }
+
+        user.generateToken();
+
+        await user.save({validateBeforeSave: false});
+
+        res.send({message: 'Login or register success', user});
+    } catch (e) {
+        return res.status(401).send({message: 'Google token incorrect Sorry!'});
+    }
+});
+
 router.delete('/sessions', async (req, res) => {
     const token = req.get('Authorization');
     const success = {message: 'Success'};

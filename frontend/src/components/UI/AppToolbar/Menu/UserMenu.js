@@ -31,7 +31,7 @@ const UserMenu = ({user}) => {
     <div>
         <div style={{ display: 'flex'}}>
             <Avatar
-                src={`${avatar}?w=248&fit=crop&auto=format`}
+                src={`${avatar}`}
                 alt={user.email}
                 sx={{ marginRight: '10px'}}
             />

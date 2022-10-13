@@ -12,5 +12,8 @@ module.exports = {
   facebook: {
     appId: '415777350715756',
     appSecret: process.env.FACEBOOK_APP_SECRET,
+  },
+  google: {
+    clientId: '192937486511-n94jdchv168745rao7of50a744p1keue.apps.googleusercontent.com',
   }
 };
